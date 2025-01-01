@@ -11,6 +11,9 @@ env:
   GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT_GITHUB }}
   BRANCH: ${{ github.ref_name }}
 
+permissions:
+  contents: read
+
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
@@ -56,8 +59,7 @@ jobs:
           trust_level: ultimate
       - name: Create a release
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT_GITHUB }}
-          GH_TOKEN: ${{ secrets.ACTIONS_PAT_GITHUB }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         run: pnpm run release
   deploy_production:
     runs-on: ubuntu-latest
