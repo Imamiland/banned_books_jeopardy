@@ -13,20 +13,28 @@ env:
   GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT_GITHUB }}
   BRANCH: ${{ github.ref_name }}
 
+permissions:
+  contents: read
+
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
       - name: Checkout the Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           persist-credentials: false
       - name: Setup NodeJS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3.8.2
         with:
           node-version: '22'
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@eae0cfeb286e66ffb5155f1a79b90583a127a68b # v2.4.1
         with:
           version: 9
           run_install: false
@@ -34,7 +42,7 @@ jobs:
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      - uses: actions/cache@v3
+      - uses: actions/cache@f4b3439a656ba812b8cb417d2d49f9c810103092 # v3.4.0
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -54,7 +62,7 @@ jobs:
       - name: Test
         run: pnpm run test
       - name: Setup GPG Keys
-        uses: crazy-max/ghaction-import-gpg@v6
+        uses: crazy-max/ghaction-import-gpg@cb9bde2e2525e640591a934b1fd28eef1dcaf5e5 # v6.2.0
         with:
           git_user_signingkey: true
           git_commit_gpgsign: true
@@ -73,8 +81,13 @@ jobs:
     needs: build_and_test
     if: needs.build_and_test.result == 'success'
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+        with:
+          egress-policy: audit
+
       - name: Checkout the Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
       - name: Decide Deployment Environment
         id: deployment_environment
         run: |
@@ -84,11 +97,11 @@ jobs:
             echo echo "PROJECT_ENVIRONMENT=preview" >> $GITHUB_ENV
           fi
       - name: Setup NodeJS
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3.8.2
         with:
           node-version: '22'
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@eae0cfeb286e66ffb5155f1a79b90583a127a68b # v2.4.1
         with:
           version: 9
           run_install: false
@@ -96,7 +109,7 @@ jobs:
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      - uses: actions/cache@v3
+      - uses: actions/cache@f4b3439a656ba812b8cb417d2d49f9c810103092 # v3.4.0
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
