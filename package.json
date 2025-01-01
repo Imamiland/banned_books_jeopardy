@@ -53,7 +53,6 @@
     "vitest": "^2.1.8"
   },
   "dependencies": {
-    "@inlang/paraglide-sveltekit": "^0.11.5",
     "@libsql/client": "^0.9.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/container-queries": "^0.1.1",
