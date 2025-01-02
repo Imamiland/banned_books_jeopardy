@@ -3,9 +3,6 @@
   "heading-style": {
     "style": "atx"
   },
-  "hr-style": {
-    "style": "- - -"
-  },
   "ignore_front_matter": true,
   "line-length": false,
   "link-fragments": false,
