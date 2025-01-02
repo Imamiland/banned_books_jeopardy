@@ -18,7 +18,7 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: 'v9.15.0' # Use the sha / tag you want to point at
+    rev: 'v9.17.0' # Use the sha / tag you want to point at
     hooks:
       - id: eslint
         stages: ['pre-commit', 'pre-push']
@@ -26,20 +26,20 @@ repos:
           - 'eslint@v9.15.0'
           - '@typescript-eslint/eslint-plugin@8.14.0'
           - 'eslint-plugin-svelte@2.46.0'
-          - 'prettier@3.3.3'
-          - 'prettier-plugin-svelte@3.2.8'
+          - 'prettier@3.4.2'
+          - 'prettier-plugin-svelte@3.3.2'
         files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
         types: [file]
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: 'v3.3.3' # Use the sha / tag you want to point at
+    rev: 'v3.4.2' # Use the sha / tag you want to point at
     hooks:
       - id: prettier
         stages: ['pre-commit', 'pre-push']
         additional_dependencies:
-          - prettier@3.3.3
-          - prettier-plugin-svelte@3.2.8
+          - prettier@3.4.2
+          - prettier-plugin-svelte@3.3.2
   - repo: https://github.com/oxsecurity/megalinter
-    rev: v8.2.0
+    rev: v8.3.0
     hooks:
       - id: megalinter-full
   - repo: https://github.com/Lucas-C/pre-commit-hooks
@@ -70,22 +70,22 @@ repos:
           - .secrets.baseline
         exclude: pnpm-lock.yaml
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.31.0
+    rev: v4.1.0
     hooks:
       - id: commitizen
   - repo: https://github.com/sirosen/texthooks
-    rev: 0.6.7
+    rev: 0.6.8
     hooks:
       - id: fix-smartquotes
       - id: fix-ligatures
       - id: fix-spaces
       - id: forbid-bidi-controls
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.21.2
+    rev: v8.22.1
     hooks:
       - id: gitleaks
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.42.0
+    rev: v0.43.0
     hooks:
       - id: markdownlint
         args:
