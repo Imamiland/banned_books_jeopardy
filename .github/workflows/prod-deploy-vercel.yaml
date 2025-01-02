@@ -93,7 +93,7 @@ jobs:
             - name: Install dependencies
               run: pnpm install
             - name: Install vercel CLI
-              run: pnpm install vercel
+              run: pnpm install -g vercel
             - name: Ensure project syncs the configs
               run: pnpm run check
             - name: Populate Preview Variables
