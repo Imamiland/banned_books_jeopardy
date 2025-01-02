@@ -3,3 +3,6 @@ devicon
 repo
 Keybase
 Vercel
+Styleguides
+Traceback
+LICEcap
