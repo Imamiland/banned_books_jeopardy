@@ -163,8 +163,7 @@ jobs:
                   ) && !contains(github.event.head_commit.message, 'skip fix')
               with:
                   branch: >-
-                      ${{ #magic___^_^___line
-                        github.event.pull_request.head.ref ||
+                      ${{ github.event.pull_request.head.ref ||
                         github.head_ref ||
                         github.ref
                       }}
