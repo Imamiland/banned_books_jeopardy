@@ -61,6 +61,10 @@ repos:
         args:
           - '-I'
           - '.codespellignore'
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.29.0
+    hooks:
+      - id: yamllint
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
     hooks:
