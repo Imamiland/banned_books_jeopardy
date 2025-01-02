@@ -1,104 +1,105 @@
+---
 default_stages:
-  - pre-commit
+    - pre-commit
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0 # Use the ref you want to point at
-    hooks:
-      - id: trailing-whitespace
-      - id: check-added-large-files
-      - id: check-case-conflict
-      - id: check-byte-order-marker
-      - id: check-merge-conflict
-      - id: check-symlinks
-      - id: check-yaml
-      - id: destroyed-symlinks
-      - id: detect-aws-credentials
-      - id: detect-private-key
-      - id: end-of-file-fixer
-      - id: mixed-line-ending
-      - id: trailing-whitespace
-  - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: 'v9.17.0' # Use the sha / tag you want to point at
-    hooks:
-      - id: eslint
-        stages: ['pre-commit', 'pre-push']
-        additional_dependencies:
-          - 'eslint@v9.15.0'
-          - '@typescript-eslint/eslint-plugin@8.14.0'
-          - 'eslint-plugin-svelte@2.46.0'
-          - 'prettier@3.4.2'
-          - 'prettier-plugin-svelte@3.3.2'
-        files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
-        types: [file]
-  - repo: https://github.com/rbubley/mirrors-prettier
-    rev: 'v3.4.2' # Use the sha / tag you want to point at
-    hooks:
-      - id: prettier
-        stages: ['pre-commit', 'pre-push']
-        additional_dependencies:
-          - prettier@3.4.2
-          - prettier-plugin-svelte@3.3.2
-  - repo: https://github.com/oxsecurity/megalinter
-    rev: v8.3.0
-    hooks:
-      - id: megalinter-full
-  - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.5
-    hooks:
-      - id: forbid-crlf
-      - id: remove-crlf
-      - id: forbid-tabs
-      - id: remove-tabs
-        args: [--whitespaces-count, '2']
-      - id: chmod
-        args: ['644']
-        files: \.md$
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
-    hooks:
-      - id: codespell
-        exclude: pnpm-lock.yaml
-        args:
-          - '-I'
-          - '.codespellignore'
-  - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.29.0
-    hooks:
-      - id: yamllint
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0
-    hooks:
-      - id: detect-secrets
-        args:
-          - --baseline
-          - .secrets.baseline
-        exclude: pnpm-lock.yaml
-  - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.1.0
-    hooks:
-      - id: commitizen
-  - repo: https://github.com/sirosen/texthooks
-    rev: 0.6.8
-    hooks:
-      - id: fix-smartquotes
-      - id: fix-ligatures
-      - id: fix-spaces
-      - id: forbid-bidi-controls
-  - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.22.1
-    hooks:
-      - id: gitleaks
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.43.0
-    hooks:
-      - id: markdownlint
-        args:
-          - --ignore
-          - CHANGELOG.md
-  - repo: local
-    hooks:
-      - id: svelte-check
-        name: svelte-check
-        entry: pnpm run check
-        language: system
-        types: [file]
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v5.0.0 # Use the ref you want to point at
+      hooks:
+          - id: trailing-whitespace
+          - id: check-added-large-files
+          - id: check-case-conflict
+          - id: check-byte-order-marker
+          - id: check-merge-conflict
+          - id: check-symlinks
+          - id: check-yaml
+          - id: destroyed-symlinks
+          - id: detect-aws-credentials
+          - id: detect-private-key
+          - id: end-of-file-fixer
+          - id: mixed-line-ending
+          - id: trailing-whitespace
+    - repo: https://github.com/pre-commit/mirrors-eslint
+      rev: 'v9.17.0' # Use the sha / tag you want to point at
+      hooks:
+          - id: eslint
+            stages: ['pre-commit', 'pre-push']
+            additional_dependencies:
+                - 'eslint@v9.15.0'
+                - '@typescript-eslint/eslint-plugin@8.14.0'
+                - 'eslint-plugin-svelte@2.46.0'
+                - 'prettier@3.4.2'
+                - 'prettier-plugin-svelte@3.3.2'
+            files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
+            types: [file]
+    - repo: https://github.com/rbubley/mirrors-prettier
+      rev: 'v3.4.2' # Use the sha / tag you want to point at
+      hooks:
+          - id: prettier
+            stages: ['pre-commit', 'pre-push']
+            additional_dependencies:
+                - prettier@3.4.2
+                - prettier-plugin-svelte@3.3.2
+    - repo: https://github.com/oxsecurity/megalinter
+      rev: v8.3.0
+      hooks:
+          - id: megalinter-full
+    - repo: https://github.com/Lucas-C/pre-commit-hooks
+      rev: v1.5.5
+      hooks:
+          - id: forbid-crlf
+          - id: remove-crlf
+          - id: forbid-tabs
+          - id: remove-tabs
+            args: [--whitespaces-count, '2']
+          - id: chmod
+            args: ['644']
+            files: \.md$
+    - repo: https://github.com/codespell-project/codespell
+      rev: v2.3.0
+      hooks:
+          - id: codespell
+            exclude: pnpm-lock.yaml
+            args:
+                - '-I'
+                - '.codespellignore'
+    - repo: https://github.com/adrienverge/yamllint.git
+      rev: v1.35.1
+      hooks:
+          - id: yamllint
+    - repo: https://github.com/Yelp/detect-secrets
+      rev: v1.5.0
+      hooks:
+          - id: detect-secrets
+            args:
+                - --baseline
+                - .secrets.baseline
+            exclude: pnpm-lock.yaml
+    - repo: https://github.com/commitizen-tools/commitizen
+      rev: v4.1.0
+      hooks:
+          - id: commitizen
+    - repo: https://github.com/sirosen/texthooks
+      rev: 0.6.8
+      hooks:
+          - id: fix-smartquotes
+          - id: fix-ligatures
+          - id: fix-spaces
+          - id: forbid-bidi-controls
+    - repo: https://github.com/zricethezav/gitleaks
+      rev: v8.22.1
+      hooks:
+          - id: gitleaks
+    - repo: https://github.com/igorshubovych/markdownlint-cli
+      rev: v0.43.0
+      hooks:
+          - id: markdownlint
+            args:
+                - --ignore
+                - CHANGELOG.md
+    - repo: local
+      hooks:
+          - id: svelte-check
+            name: svelte-check
+            entry: pnpm run check
+            language: system
+            types: [file]

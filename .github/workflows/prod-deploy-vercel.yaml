@@ -1,106 +1,102 @@
+---
 name: Vercel Production Deployments
 on:
-  push:
-    branches:
-      - main
-
+    push:
+        branches:
+            - main
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT_GITHUB }}
-  BRANCH: ${{ github.ref_name }}
-
+    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT_GITHUB }}
+    BRANCH: ${{ github.ref_name }}
 permissions:
-  contents: read
-
+    contents: read
 jobs:
-  build_and_test:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-      id-token: write
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
-      - name: Checkout the Repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          persist-credentials: false
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-      - name: Setup NodeJS
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install
-      - name: Ensure playwright has the latest browser binaries
-        run: pnpx playwright install --with-deps && pnpx playwright install --with-deps
-      - name: Ensure project is formatted and linted
-        run: pnpm run lint
-      - name: Ensure project syncs the configs
-        run: pnpm run check
-      - name: Build
-        run: pnpm run build
-      - name: Test
-        run: pnpm run test
-      - name: Setup GPG Keys
-        uses: crazy-max/ghaction-import-gpg@cb9bde2e2525e640591a934b1fd28eef1dcaf5e5 # v6.2.0
-        with:
-          git_user_signingkey: true
-          git_commit_gpgsign: true
-          git_tag_gpgsign: true
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_KEY_PASSPHRASE }}
-          git_committer_email: ${{ vars.GIT_AUTHOR_EMAIL }}
-          fingerprint: ${{ vars.GPG_FINGERPRINT }}
-          trust_level: ultimate
-      - name: Create a release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-          EDITOR: "echo 'Created-by: semantic-release' > $1"
-        run: pnpm run release
-  deploy_production:
-    runs-on: ubuntu-latest
-    needs: build_and_test
-    if: needs.build_and_test.result == 'success'
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
-      - name: Checkout the Repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - name: Decide Deployment Environment
-        id: deployment_environment
-        run: |
-          if [[ ${{ env.BRANCH }} == "main" ]]; then
-            echo "PROJECT_ENVIRONMENT=production" >> $GITHUB_ENV
-          else
-            echo echo "PROJECT_ENVIRONMENT=preview" >> $GITHUB_ENV
-          fi
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-      - name: Setup NodeJS
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install
-      - name: Ensure project syncs the configs
-        run: pnpm run check
-      - name: Populate Preview Variables
-        run: vercel pull --yes --environment=${{env.PROJECT_ENVIRONMENT}} --token=${{ env.VERCEL_TOKEN }}
-      - name: Build Project
-        run: vercel build --prod --yes --token=${{ env.VERCEL_TOKEN }}
-      - name: Deploy to Vercel
-        run: vercel deploy --prod --prebuilt --token=${{ env.VERCEL_TOKEN }}
+    build_and_test:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+            id-token: write
+        steps:
+            - name: Harden Runner
+              uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+              with:
+                  egress-policy: audit
+            - name: Checkout the Repository
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              with:
+                  persist-credentials: false
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+            - name: Setup NodeJS
+              uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
+            - name: Install dependencies
+              run: pnpm install
+            - name: Ensure playwright has the latest browser binaries
+              run: pnpx playwright install --with-deps && pnpx playwright install --with-deps
+            - name: Ensure project is formatted and linted
+              run: pnpm run lint
+            - name: Ensure project syncs the configs
+              run: pnpm run check
+            - name: Build
+              run: pnpm run build
+            - name: Test
+              run: pnpm run test
+            - name: Setup GPG Keys
+              uses: crazy-max/ghaction-import-gpg@cb9bde2e2525e640591a934b1fd28eef1dcaf5e5 # v6.2.0
+              with:
+                  git_user_signingkey: true
+                  git_commit_gpgsign: true
+                  git_tag_gpgsign: true
+                  gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+                  passphrase: ${{ secrets.GPG_KEY_PASSPHRASE }}
+                  git_committer_email: ${{ vars.GIT_AUTHOR_EMAIL }}
+                  fingerprint: ${{ vars.GPG_FINGERPRINT }}
+                  trust_level: ultimate
+            - name: Create a release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+                  EDITOR: "echo 'Created-by: semantic-release' > $1"
+              run: pnpm run release
+    deploy_production:
+        runs-on: ubuntu-latest
+        needs: build_and_test
+        if: needs.build_and_test.result == 'success'
+        steps:
+            - name: Harden Runner
+              uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
+              with:
+                  egress-policy: audit
+            - name: Checkout the Repository
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+            - name: Decide Deployment Environment
+              id: deployment_environment
+              run: |
+                  if [[ ${{ env.BRANCH }} == "main" ]]; then
+                    echo "PROJECT_ENVIRONMENT=production" >> $GITHUB_ENV
+                  else
+                    echo echo "PROJECT_ENVIRONMENT=preview" >> $GITHUB_ENV
+                  fi
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+            - name: Setup NodeJS
+              uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
+            - name: Install dependencies
+              run: pnpm install
+            - name: Ensure project syncs the configs
+              run: pnpm run check
+            - name: Populate Preview Variables
+              run: vercel pull --yes --environment=${{env.PROJECT_ENVIRONMENT}} --token=${{ env.VERCEL_TOKEN }}
+            - name: Build Project
+              run: vercel build --prod --yes --token=${{ env.VERCEL_TOKEN }}
+            - name: Deploy to Vercel
+              run: vercel deploy --prod --prebuilt --token=${{ env.VERCEL_TOKEN }}

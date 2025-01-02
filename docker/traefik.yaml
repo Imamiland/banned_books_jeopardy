@@ -1,24 +1,20 @@
+---
 entryPoints:
-  web:
-    address: ':80'
-  websecure:
-    address: ':443'
-
+    web:
+        address: ':80'
+    websecure:
+        address: ':443'
 api:
-  insecure: true
-
+    insecure: true
 providers:
-  docker:
-    exposedByDefault: false
-
+    docker:
+        exposedByDefault: false
 tls:
-  certificates:
-    - certFile: /Users/aimami/.ssl_certs/_wildcard.dev.localhost+1.pem
-      keyFile: /Users/aimami/.ssl_certs/_wildcard.dev.localhost+1-key.pem
-
+    certificates:
+        - certFile: /Users/aimami/.ssl_certs/_wildcard.dev.localhost+1.pem
+          keyFile: /Users/aimami/.ssl_certs/_wildcard.dev.localhost+1-key.pem
 log:
-  level: INFO
-  format: common
-
+    level: INFO
+    format: common
 accessLog:
-  filePath: 'logs/traefik-access.log'
+    filePath: 'logs/traefik-access.log'

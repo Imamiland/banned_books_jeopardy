@@ -1,64 +1,55 @@
+---
 # .mega-linter.yml
 # Configuration for MegaLinter with SvelteKit and JavaScript focus
-
 APPLY_FIXES: all # When active, APPLY_FIXES must also be defined as environment variable
 SHOW_ELAPSED_TIME: true
 FILEIO_REPORTER: false
-
 # Disable some default linters that conflict with our setup
 DISABLE:
-  - SPELL
-  - COPYPASTE
-  - CSS
-  - DOCKERFILE
-
+    - SPELL
+    - COPYPASTE
+    - CSS
+    - DOCKERFILE
 # JavaScript/TypeScript specific configuration
 JAVASCRIPT_DEFAULT_STYLE: prettier
 JAVASCRIPT_ES_CONFIG_FILE: .eslintrc.cjs
 JAVASCRIPT_PRETTIER_CONFIG_FILE: .prettierrc
 JAVASCRIPT_PRETTIER_FILTER_REGEX_INCLUDE: ".*\\.(js|cjs|mjs|ts|svelte)$"
-
 # Enable specific linters for our stack
 ENABLE_LINTERS:
-  - JAVASCRIPT_ES
-  - JAVASCRIPT_PRETTIER
-  - JAVASCRIPT_STANDARD
-  - JSON_PRETTIER
-  - JSON_JSONLINT
-  - YAML_PRETTIER
-  - YAML_YAMLLINT
-  - MARKDOWN_MARKDOWNLINT
-  - MARKDOWN_PRETTIER
-
+    - JAVASCRIPT_ES
+    - JAVASCRIPT_PRETTIER
+    - JAVASCRIPT_STANDARD
+    - JSON_PRETTIER
+    - JSON_JSONLINT
+    - YAML_PRETTIER
+    - MARKDOWN_MARKDOWNLINT
+    - MARKDOWN_PRETTIER
 # Configure file extensions for Svelte
 SVELTE_FILE_EXTENSIONS:
-  - .svelte
-
+    - .svelte
 # Linter-specific configurations
 JAVASCRIPT_ES_FILTER_REGEX_INCLUDE: ".*\\.(js|cjs|mjs|ts|svelte)$"
 JAVASCRIPT_ES_FILE_EXTENSIONS:
-  - '.js'
-  - '.cjs'
-  - '.mjs'
-  - '.ts'
-  - '.svelte'
-
+    - '.js'
+    - '.cjs'
+    - '.mjs'
+    - '.ts'
+    - '.svelte'
 # Report configuration
 PRINT_ALPHA: true
 REPORT_OUTPUT_FOLDER: mega-linter-reports
 TEXT_REPORTER: true
 UPDATED_SOURCES_REPORTER: true
 LOG_LEVEL: INFO
-
 # File configurations
 FILTER_REGEX_INCLUDE: ".*\\.(js|cjs|mjs|ts|svelte|json|yml|yaml|md)$"
 FILTER_REGEX_EXCLUDE: '(/__tests__/|/node_modules/|/dist/)'
 ADDITIONAL_EXCLUDED_DIRECTORIES:
-  - '.svelte-kit'
-  - 'build'
-  - 'static'
-  - 'coverage'
-
+    - '.svelte-kit'
+    - 'build'
+    - 'static'
+    - 'coverage'
 # CI/CD specific settings
 VALIDATE_ALL_CODEBASE: true # Set to false to only validate changed files in PRs
 GITHUB_STATUS_REPORTER: true

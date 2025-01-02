@@ -1,44 +1,45 @@
+---
 services:
-  sveltekit:
-    build:
-      context: docker
-    ports:
-      - '5173:5173' # Expose the dev server
-    volumes:
-      - .:/app # Mount project files for live reload
-      - /app/node_modules # Prevent overwriting node_modules
-    networks:
-      - default
-    environment:
-      - NODE_ENV=development
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.sveltekit.rule=Host(`sveltekit.dev.localhost`)'
-      - 'traefik.http.routers.sveltekit.entrypoints=websecure'
-      - 'traefik.http.services.sveltekit.loadbalancer.server.port=5173'
-  traefik:
-    image: traefik:v3.2
-    command:
-      - '--api=true'
-      - '--providers.docker=true'
-      - '--entrypoints.web.address=:80'
-      - '--entrypoints.websecure.address=:443'
-    ports:
-      - '80:80'
-      - '443:443'
-      - '8080:8080'
-    volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock:ro'
-      - './docker/traefik.yaml:/etc/traefik/traefik.yaml'
-      - '~/.ssl_certs:/certs'
-    networks:
-      - default
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.traefik.rule=Host(`traefik.dev.localhost`)'
-      - 'traefik.http.routers.traefik.entrypoints=web'
-      - 'traefik.http.routers.traefik.service=api@internal'
-      - 'traefik.http.routers.traefik.entrypoints=websecure'
+    sveltekit:
+        build:
+            context: docker
+        ports:
+            - '5173:5173' # Expose the dev server
+        volumes:
+            - .:/app # Mount project files for live reload
+            - /app/node_modules # Prevent overwriting node_modules
+        networks:
+            - default
+        environment:
+            - NODE_ENV=development
+        labels:
+            - 'traefik.enable=true'
+            - 'traefik.http.routers.sveltekit.rule=Host(`sveltekit.dev.localhost`)'
+            - 'traefik.http.routers.sveltekit.entrypoints=websecure'
+            - 'traefik.http.services.sveltekit.loadbalancer.server.port=5173'
+    traefik:
+        image: traefik:v3.2
+        command:
+            - '--api=true'
+            - '--providers.docker=true'
+            - '--entrypoints.web.address=:80'
+            - '--entrypoints.websecure.address=:443'
+        ports:
+            - '80:80'
+            - '443:443'
+            - '8080:8080'
+        volumes:
+            - '/var/run/docker.sock:/var/run/docker.sock:ro'
+            - './docker/traefik.yaml:/etc/traefik/traefik.yaml'
+            - '~/.ssl_certs:/certs'
+        networks:
+            - default
+        labels:
+            - 'traefik.enable=true'
+            - 'traefik.http.routers.traefik.rule=Host(`traefik.dev.localhost`)'
+            - 'traefik.http.routers.traefik.entrypoints=web'
+            - 'traefik.http.routers.traefik.service=api@internal'
+            - 'traefik.http.routers.traefik.entrypoints=websecure'
 networks:
-  default:
-    name: dev-network
+    default:
+        name: dev-network
