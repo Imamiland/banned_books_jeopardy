@@ -1,26 +1,53 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "assignees": ["AliSajid"],
-  "baseBranches": ["next"],
-  "extends": ["config:best-practices", "group:githubArtifactActions", ":rebaseStalePrs"],
+  "assignees": [
+    "AliSajid"
+  ],
+  "baseBranches": [
+    "next"
+  ],
+  "extends": [
+    "config:best-practices",
+    "group:githubArtifactActions",
+    ":rebaseStalePrs"
+  ],
   "gitAuthor": "Imamiland CI Bot <152510784+imamiland-bot@users.noreply.github.com>",
-  "labels": ["dependencies", "renovate"],
+  "labels": [
+    "dependencies",
+    "renovate"
+  ],
   "packageRules": [
     {
       "automerge": true,
       "groupName": "Repository Maintenance",
       "groupSlug": "repository-maintenance",
-      "matchManagers": ["pre-commit", "github-actions"]
+      "matchManagers": [
+        "pre-commit",
+        "github-actions"
+      ]
     },
     {
       "automerge": true,
-      "matchDepTypes": ["devDependencies", "minor", "patch"],
-      "matchPackageNames": ["eslint{/,}**", "stylistic{/,}**", "prettier{/,}**", "jest{/,}**"]
+      "matchDepTypes": [
+        "devDependencies",
+        "minor",
+        "patch"
+      ],
+      "matchPackageNames": [
+        "eslint{/,}**",
+        "stylistic{/,}**",
+        "prettier{/,}**",
+        "jest{/,}**"
+      ]
     },
     {
       "enabled": false,
-      "matchFileNames": ["Dockerfile"],
-      "matchManagers": ["dockerfile"]
+      "matchFileNames": [
+        "Dockerfile"
+      ],
+      "matchManagers": [
+        "dockerfile"
+      ]
     }
   ],
   "platformCommit": "enabled",
@@ -28,6 +55,10 @@
   "pre-commit": {
     "enabled": true
   },
-  "schedule": ["after 10pm every weekday", "every weekend", "before 5am every weekday"],
+  "schedule": [
+    "after 10pm every weekday",
+    "every weekend",
+    "before 5am every weekday"
+  ],
   "semanticCommits": "enabled"
 }
