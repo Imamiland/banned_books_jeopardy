@@ -9,8 +9,9 @@
   "bracketSameLine": false,
   "plugins": [
     "prettier-plugin-svelte",
-    "prettier-plugin-tailwindcss",
-    "prettier-plugin-multiline-arrays"
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-multiline-arrays",
+    "prettier-plugin-tailwindcss"
   ],
   "overrides": [
     {
