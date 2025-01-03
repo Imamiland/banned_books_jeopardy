@@ -1,0 +1,10 @@
+{
+  "comments": true,
+  "trailing-commas": false,
+  "compact": true,
+  "enforce-single-quotes": true,
+  "prune-comments": false,
+  "continue": true,
+  "pretty-print": false,
+  "in-place": true
+}
