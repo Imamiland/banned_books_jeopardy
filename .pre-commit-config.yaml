@@ -1,44 +1,61 @@
 ---
 default_stages:
     - pre-commit
+    - pre-push
 repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v5.0.0 # Use the ref you want to point at
       hooks:
           - id: trailing-whitespace
+            args:
+                - '--markdown-linebreak-ext=md'
           - id: check-added-large-files
+          - id: check-executables-have-shebangs
+          - id: check-illegal-windows-names
+          - id: check-shebang-scripts-are-executable
           - id: check-case-conflict
-          - id: check-byte-order-marker
+          - id: fix-byte-order-marker
+          - id: forbid-submodules
           - id: check-merge-conflict
           - id: check-symlinks
           - id: check-yaml
+          - id: check-toml
+          - id: no-commit-to-branch
+            args:
+                - --branch
+                - main
+                - --branch
+                - next
           - id: destroyed-symlinks
           - id: detect-aws-credentials
           - id: detect-private-key
           - id: end-of-file-fixer
           - id: mixed-line-ending
-          - id: trailing-whitespace
+            args:
+                - '--fix=lf'
     - repo: https://github.com/pre-commit/mirrors-eslint
-      rev: 'v9.17.0' # Use the sha / tag you want to point at
+      rev: v9.17.0 # Use the sha / tag you want to point at
       hooks:
           - id: eslint
-            stages: ['pre-commit', 'pre-push']
             additional_dependencies:
-                - 'eslint@v9.15.0'
+                - eslint@v9.15.0
                 - '@typescript-eslint/eslint-plugin@8.14.0'
-                - 'eslint-plugin-svelte@2.46.0'
-                - 'prettier@3.4.2'
-                - 'prettier-plugin-svelte@3.3.2'
+                - eslint-plugin-svelte@2.46.0
+                - prettier@3.4.2
+                - prettier-plugin-svelte@3.3.2
+                - prettier-plugin-multiline-arrays@4.0.1
+                - prettier-plugin-organize-imports@4.1.0
             files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
             types: [file]
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: 'v3.4.2' # Use the sha / tag you want to point at
+      rev: v3.4.2 # Use the sha / tag you want to point at
       hooks:
           - id: prettier
-            stages: ['pre-commit', 'pre-push']
             additional_dependencies:
                 - prettier@3.4.2
                 - prettier-plugin-svelte@3.3.2
+                - prettier-plugin-multiline-arrays@4.0.1
+                - prettier-plugin-organize-imports@4.1.0
     - repo: https://github.com/oxsecurity/megalinter
       rev: v8.3.0
       hooks:
@@ -60,8 +77,8 @@ repos:
           - id: codespell
             exclude: pnpm-lock.yaml
             args:
-                - '-I'
-                - '.codespellignore'
+                - -I
+                - .codespellignore
     - repo: https://github.com/adrienverge/yamllint.git
       rev: v1.35.1
       hooks:
