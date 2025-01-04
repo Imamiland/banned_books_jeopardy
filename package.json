@@ -1,5 +1,13 @@
 {
   "name": "banned-books-jeopardy",
+  "browserslist": [
+    ">0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "fully supports es6-module",
+    "maintained node versions",
+    "not dead"
+  ],
   "private": true,
   "version": "1.0.0-next.1",
   "type": "module",
@@ -17,7 +25,8 @@
     "db:push": "drizzle-kit push",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "browserslist:lint": "browserslist-lint"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
@@ -37,6 +46,7 @@
     "@types/eslint": "^9.6.1",
     "@types/eslint__js": "^8.42.3",
     "autoprefixer": "^10.4.20",
+    "browserslist-lint": "^0.3.3",
     "drizzle-kit": "^0.22.8",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",

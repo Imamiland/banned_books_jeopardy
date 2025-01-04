@@ -78,6 +78,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.49)
+      browserslist-lint:
+        specifier: ^0.3.3
+        version: 0.3.3
       drizzle-kit:
         specifier: ^0.22.8
         version: 0.22.8
@@ -1552,6 +1555,10 @@ packages:
 
   browser-or-node@3.0.0:
     resolution: {integrity: sha512-iczIdVJzGEYhP5DqQxYM9Hh7Ztpqqi+CXZpSmX8ALFs9ecXkQIeqRyM6TfxEfMVpwhl3dSuDvxdzzo9sUOIVBQ==}
+
+  browserslist-lint@0.3.3:
+    resolution: {integrity: sha512-QdNBodjhb2vAow49QgKAhSLk5W3GdVaXm49rhKcOFo1JsDLq4aducbO4OuVYFolClUIxaLEAq5djSyzgaCxlYg==}
+    hasBin: true
 
   browserslist@4.24.3:
     resolution: {integrity: sha512-1CPmv8iobE2fyRMV97dAcMVegvvWKxmq94hkLiAkUGwKVTyDLw33K+ZxiFrREKmmps4rIw6grcCFCnTMSZ/YiA==}
@@ -4949,6 +4956,11 @@ snapshots:
       fill-range: 7.1.1
 
   browser-or-node@3.0.0: {}
+
+  browserslist-lint@0.3.3:
+    dependencies:
+      browserslist: 4.24.3
+      picocolors: 1.1.1
 
   browserslist@4.24.3:
     dependencies:
