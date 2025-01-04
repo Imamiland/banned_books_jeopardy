@@ -120,3 +120,11 @@ repos:
             entry: pnpm run check
             language: system
             types: [file]
+            description: 'Run the svelte-check script'
+          - id: browserslist-lint
+            name: browserslist-lint
+            entry: pnpm run browserslist:lint
+            language: system
+            files: 'package.json'
+            pass_filenames: false
+            description: 'Lint the browserslist enty/files'
