@@ -30,3 +30,5 @@ vite.config.ts.timestamp-*
 megalinter-reports/
 
 issue-creator
+
+.vscode/
