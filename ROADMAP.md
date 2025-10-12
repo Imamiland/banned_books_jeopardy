@@ -25,7 +25,6 @@ This document outlines the development goals and priorities for the **Banned Boo
    - Implement a mechanism for manually or automatically verifying audience answers.
 
 4. **Deployment Setup**
-
    - Finalize automated deployments for preview, next, and production environments.
 
 ---
