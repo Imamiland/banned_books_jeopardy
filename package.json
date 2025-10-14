@@ -11,6 +11,11 @@
   "private": true,
   "version": "1.0.0-next.1",
   "type": "module",
+  "engines": {
+    "node": ">=22.20.0",
+    "pnpm": ">=10.14.0"
+  },
+  "engineStrict": true,
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
