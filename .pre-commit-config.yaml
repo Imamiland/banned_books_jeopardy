@@ -35,20 +35,20 @@ repos:
           - id: mixed-line-ending
             args:
                 - '--fix=lf'
-    # - repo: https://github.com/pre-commit/mirrors-eslint
-    #   rev: v9.37.0 # Use the sha / tag you want to point at
-    #   hooks:
-    #     - id: eslint
-    #       additional_dependencies:
-    #         - eslint@v9.15.0
-    #         - "@typescript-eslint/eslint-plugin@8.14.0"
-    #         - eslint-plugin-svelte@2.46.0
-    #         - prettier@3.4.2
-    #         - prettier-plugin-svelte@3.3.2
-    #         - prettier-plugin-multiline-arrays@4.0.1
-    #         - prettier-plugin-organize-imports@4.1.0
-    #       files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
-    #       types: [file]
+    - repo: https://github.com/pre-commit/mirrors-eslint
+      rev: v9.37.0 # Use the sha / tag you want to point at
+      hooks:
+          - id: eslint
+            additional_dependencies:
+                - eslint@v9.15.0
+                - '@typescript-eslint/eslint-plugin@8.14.0'
+                - eslint-plugin-svelte@2.46.0
+                - prettier@3.4.2
+                - prettier-plugin-svelte@3.3.2
+                - prettier-plugin-multiline-arrays@4.0.1
+                - prettier-plugin-organize-imports@4.1.0
+            files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
+            types: [file]
     - repo: https://github.com/rbubley/mirrors-prettier
       rev: v3.6.2 # Use the sha / tag you want to point at
       hooks:
@@ -58,10 +58,10 @@ repos:
                 - prettier-plugin-svelte@3.3.2
                 - prettier-plugin-multiline-arrays@4.0.1
                 - prettier-plugin-organize-imports@4.1.0
-    - repo: https://github.com/oxsecurity/megalinter
-      rev: v9.1.0
-      hooks:
-          - id: megalinter-full
+    # - repo: https://github.com/oxsecurity/megalinter
+    #   rev: v9.1.0
+    #   hooks:
+    #       - id: megalinter-full
     - repo: https://github.com/Lucas-C/pre-commit-hooks
       rev: v1.5.5
       hooks:

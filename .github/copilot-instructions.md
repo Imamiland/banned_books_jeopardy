@@ -125,6 +125,121 @@ chore(deps): upgrade drizzle-orm to 0.44.6
 - `next` → Staging with pre-releases (versions like `1.0.0-next.1`)
 - Feature branches → Merge to `next` → Eventually merge to `main`
 
+## GitHub Project Management
+
+### Issue Templates (YAML Forms)
+
+**Location**: `.github/ISSUE_TEMPLATE/`
+
+The project uses modern GitHub Form templates (YAML format) with structured fields and validation:
+
+1. **Bug Report** (`bug_report.yml`):
+
+   - Structured fields: description, reproduction steps, expected/actual behavior
+   - Dropdowns: severity (Critical/High/Medium/Low), browser, OS
+   - Version fields: browser version, Node.js version
+   - Console logs section with syntax highlighting
+   - Screenshot/video upload area
+   - Required pre-submission checklist
+
+2. **Feature Request** (`feature_request.yml`):
+
+   - Structured fields: description, problem statement, proposed solution
+   - Feature area dropdown: Backend, Frontend, Testing, Documentation, Infrastructure, Auth & Security, Game Mechanics, Admin Dashboard, Board Creation/Editing, Sound/Audio, Animations/UI
+   - Priority dropdown (P0-P4)
+   - User type dropdown: Player, Creator, Administrator, All users
+   - Impact areas checkboxes: UX, Performance, Accessibility, Security, Database Schema, API/Backend, UI/Frontend, Documentation
+   - Mockups/examples upload area
+
+3. **Documentation Update** (`documentation.yml`):
+
+   - Documentation location checkboxes
+   - Issue type dropdown: Missing, Incorrect/outdated, Unclear, Broken links, Typo/grammar, etc.
+   - Current content and proposed changes sections (markdown rendered)
+   - Target audience dropdown
+   - Documentation scope checkboxes
+
+4. **Template Configuration** (`config.yml`):
+   - Disables blank issues
+   - Links to GitHub Discussions and Security Advisories
+
+**Key Benefits**:
+
+- Structured data collection (no free-form text)
+- Dropdown validation (standardized values)
+- Required field enforcement
+- Better data quality for automation
+- Improved user experience with form controls
+
+### GitHub Projects Structure
+
+**Setup Guide**: `.github/PROJECT_SETUP.md`
+
+The repository uses GitHub Projects (v2) for issue tracking with custom fields:
+
+**Custom Fields**:
+
+- **Priority**: P0 (Critical) / P1 (High) / P2 (Medium) / P3 (Low) / P4 (Nice to have)
+- **Size**: XS (< 1 day) / S (1-2 days) / M (3-5 days) / L (1-2 weeks) / XL (> 2 weeks)
+- **Type**: Conventional Commit types (feat, fix, docs, chore, refactor, test, perf, ci)
+- **Feature Area**: Backend, Frontend, Testing, Documentation, Infrastructure, Auth & Security
+- **Milestone**: MVP, Alpha, Beta, Release Candidate, Release 1.0
+- **Sprint**: Sprint number for agile planning
+
+**Project Views** (10 views total):
+
+1. Kanban Board (default)
+2. Feature Area Board (grouped by area)
+3. Priority Matrix (P0-P4 columns)
+4. Bug Tracker (bugs only)
+5. Feature Backlog (enhancements only)
+6. Documentation Tasks
+7. Current Sprint
+8. Roadmap Timeline (by milestone)
+9. Size Estimate View
+10. All Issues Table
+
+**Automation** (`.github/workflows/project-automation.yml`):
+
+- Auto-labeling based on issue type
+- Priority triage (P0 issues trigger alerts)
+- PR status sync to project board
+- Welcome messages for first-time contributors
+- Auto-assignment based on feature area
+
+**Label System** (`.github/LABELS.md`):
+
+- Type labels: bug, enhancement, documentation, chore, etc.
+- Priority labels: P0, P1, P2, P3, P4
+- Size labels: XS, S, M, L, XL
+- Feature area labels: backend, frontend, testing, documentation, infrastructure, auth-security
+- Status labels: needs triage, in progress, blocked, ready for review
+- Milestone labels: MVP, alpha, beta, RC, release-1.0
+- Workflow labels: good first issue, help wanted, breaking change, security
+
+**Creating Issues**:
+
+- Use YAML form templates (auto-fills labels)
+- Maintainers set Priority, Size, Feature Area, Milestone fields
+- Automation adds issues to project board
+- Labels applied based on template selection
+
+### Project Automation Workflow
+
+The `project-automation.yml` workflow provides 5 automation jobs:
+
+1. **Auto-Label**: Applies type labels (bug, enhancement, docs) based on template selection
+2. **Triage Priority**: Alerts on P0 (Critical) issues, auto-assigns based on feature area
+3. **Sync PR Status**: Updates project board when PRs are opened/merged/closed
+4. **Welcome**: Welcomes first-time contributors
+5. **Auto-Assign**: Assigns issues to team members based on feature area expertise
+
+**Configuration Requirements**:
+
+- `GITHUB_TOKEN`: Automatically provided by GitHub Actions
+- Project board must be created manually via GitHub web UI (cannot be automated via API)
+- Labels created via GitHub CLI script in `.github/LABELS.md`
+
 ## Project-Specific Patterns
 
 ### Game State Management
@@ -851,6 +966,10 @@ pnpm test:e2e --project=chromium  # Specific browser
 - Semantic Release with Conventional Commits
 - CI/CD pipelines (GitHub Actions)
 - Sound effect file structure (`static/sounds/` with placeholders)
+- **GitHub Projects structure** (`.github/PROJECT_SETUP.md` with 10 views, custom fields)
+- **YAML-based issue templates** (bug report, feature request, documentation)
+- **Project automation workflow** (auto-labeling, triage, PR sync, welcome, auto-assign)
+- **Label system** (comprehensive labels with CLI creation script)
 
 ### 🚧 In Progress
 
