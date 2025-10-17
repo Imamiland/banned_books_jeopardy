@@ -1,0 +1,177 @@
+name: 📚 Documentation Update
+description: Suggest improvements or report issues in documentation
+title: '[DOCS] '
+labels: ['documentation', 'needs triage']
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for helping improve our documentation! Please provide details about what needs to be updated.
+
+    - type: textarea
+      id: description
+      attributes:
+          label: Documentation Issue
+          description: A clear description of what's missing, incorrect, or unclear in the documentation.
+          placeholder: Describe the documentation issue...
+      validations:
+          required: true
+
+    - type: checkboxes
+      id: location
+      attributes:
+          label: Documentation Location
+          description: Where is the documentation issue located? (Check all that apply)
+          options:
+              - label: README.md
+              - label: AI_ONBOARDING.md
+              - label: ROADMAP.md
+              - label: CONTRIBUTING.md
+              - label: DEPLOYMENT.md
+              - label: CODE_OF_CONDUCT.md
+              - label: GOVERNANCE.md
+              - label: In-code comments/JSDoc
+              - label: GitHub Wiki
+              - label: API documentation
+              - label: Other (specify below)
+      validations:
+          required: true
+
+    - type: input
+      id: file-path
+      attributes:
+          label: Specific File/Path
+          description: If applicable, provide the specific file path or section
+          placeholder: e.g. src/lib/components/GameBoard.svelte or README.md - Setup section
+      validations:
+          required: false
+
+    - type: dropdown
+      id: issue-type
+      attributes:
+          label: Issue Type
+          description: What kind of documentation issue is this?
+          options:
+              - Missing documentation
+              - Incorrect/outdated information
+              - Unclear explanation
+              - Broken links
+              - Typo/grammar
+              - Code examples needed
+              - Missing API reference
+              - Missing setup instructions
+              - Other
+      validations:
+          required: true
+
+    - type: textarea
+      id: current-content
+      attributes:
+          label: Current Content
+          description: What does the documentation currently say (if applicable)?
+          placeholder: Quote or describe the current content...
+          render: markdown
+      validations:
+          required: false
+
+    - type: textarea
+      id: proposed-changes
+      attributes:
+          label: Proposed Changes
+          description: What should the documentation say instead? Provide specific suggestions.
+          placeholder: Describe or draft the improved documentation...
+          render: markdown
+      validations:
+          required: true
+
+    - type: textarea
+      id: reasoning
+      attributes:
+          label: Why This Matters
+          description: Explain why this documentation change is important. Who will benefit?
+          placeholder: Explain the impact and benefit of this change...
+      validations:
+          required: true
+
+    - type: dropdown
+      id: audience
+      attributes:
+          label: Target Audience
+          description: Who is the primary audience for this documentation?
+          options:
+              - New contributors
+              - Developers
+              - End users
+              - Administrators
+              - All audiences
+              - Other
+      validations:
+          required: false
+
+    - type: checkboxes
+      id: scope
+      attributes:
+          label: Documentation Scope
+          description: What areas of documentation are affected? (Check all that apply)
+          options:
+              - label: Setup/Installation
+              - label: Configuration
+              - label: Usage/How-to guides
+              - label: API Reference
+              - label: Architecture/Design
+              - label: Testing
+              - label: Deployment
+              - label: Contributing guidelines
+              - label: Troubleshooting
+              - label: Examples/Tutorials
+
+    - type: textarea
+      id: related-code
+      attributes:
+          label: Related Code/Features
+          description: Link to related code, issues, or PRs that this documentation covers.
+          placeholder: e.g. #123, PR #456, src/lib/components/Timer.svelte
+      validations:
+          required: false
+
+    - type: textarea
+      id: additional
+      attributes:
+          label: Additional Context
+          description: Add any other context, screenshots, or links here.
+          placeholder: Any other relevant information...
+      validations:
+          required: false
+
+    - type: checkboxes
+      id: checklist
+      attributes:
+          label: Pre-submission Checklist
+          description: Please confirm the following before submitting
+          options:
+              - label: I have searched existing issues to ensure this hasn't been reported
+                required: true
+              - label: I have provided specific suggestions for improvement
+                required: true
+              - label: I have explained why this change is important
+                required: true
+
+    - type: markdown
+      attributes:
+          value: |
+              ---
+
+              ### 📋 For Maintainers
+
+              When triaging this documentation issue, please set:
+              - **Type**: `docs`
+              - **Priority**: P0 (Blocking) / P1 (High) / P2 (Medium) / P3 (Low) / P4 (Nice to have)
+              - **Size**: XS (< 1 hour) / S (1-2 hours) / M (half day) / L (1 day) / XL (> 1 day)
+              - **Feature Area**: Documentation
+              - **Milestone**: MVP / Alpha / Beta / Release Candidate / Release 1.0
+
+              Consider:
+              - Impact on onboarding new contributors
+              - Alignment with actual codebase state
+              - Consistency with other documentation
+              - Need for code examples or diagrams

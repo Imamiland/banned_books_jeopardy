@@ -1,0 +1,168 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement for the application
+title: '[FEATURE] '
+labels: ['enhancement', 'needs triage']
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for your feature suggestion! Please provide detailed information to help us understand your idea.
+
+    - type: textarea
+      id: description
+      attributes:
+          label: Feature Description
+          description: A clear and concise description of the feature you'd like to see.
+          placeholder: Describe the feature in detail...
+      validations:
+          required: true
+
+    - type: textarea
+      id: problem
+      attributes:
+          label: Problem Statement
+          description: What problem does this feature solve? What user need does it address?
+          placeholder: Explain the problem or need this feature addresses...
+      validations:
+          required: true
+
+    - type: textarea
+      id: solution
+      attributes:
+          label: Proposed Solution
+          description: How would you like this feature to work? Describe the implementation or behavior.
+          placeholder: Describe your proposed solution in detail...
+      validations:
+          required: true
+
+    - type: textarea
+      id: alternatives
+      attributes:
+          label: Alternative Solutions
+          description: Have you considered any alternative solutions or features?
+          placeholder: Describe alternative approaches you've considered...
+      validations:
+          required: false
+
+    - type: dropdown
+      id: feature-area
+      attributes:
+          label: Feature Area
+          description: Which area of the application does this feature relate to?
+          options:
+              - Backend
+              - Frontend
+              - Testing
+              - Documentation
+              - Infrastructure
+              - Auth & Security
+              - Game Mechanics
+              - Admin Dashboard
+              - Board Creation/Editing
+              - Sound/Audio
+              - Animations/UI
+      validations:
+          required: true
+
+    - type: dropdown
+      id: priority
+      attributes:
+          label: Priority (Your Opinion)
+          description: How important is this feature to you?
+          options:
+              - P0 - Critical (Blocking/Essential)
+              - P1 - High (Very important)
+              - P2 - Medium (Important)
+              - P3 - Low (Nice to have)
+              - P4 - Very Low (Future consideration)
+      validations:
+          required: false
+
+    - type: dropdown
+      id: user-type
+      attributes:
+          label: User Type
+          description: Which user type would benefit from this feature?
+          options:
+              - Player (game participants)
+              - Creator (board creators)
+              - Administrator (system admins)
+              - All users
+              - Other
+      validations:
+          required: true
+
+    - type: checkboxes
+      id: impact
+      attributes:
+          label: Impact Areas
+          description: Which areas would this feature impact? (Check all that apply)
+          options:
+              - label: User Experience
+              - label: Performance
+              - label: Accessibility
+              - label: Security
+              - label: Database Schema
+              - label: API/Backend
+              - label: UI/Frontend
+              - label: Documentation
+
+    - type: textarea
+      id: mockups
+      attributes:
+          label: Mockups/Examples
+          description: If applicable, add mockups, wireframes, or examples from other applications.
+          placeholder: Drag and drop images or paste links here...
+      validations:
+          required: false
+
+    - type: textarea
+      id: technical-notes
+      attributes:
+          label: Technical Notes
+          description: Any technical considerations, constraints, or implementation suggestions?
+          placeholder: Technical details, dependencies, or considerations...
+      validations:
+          required: false
+
+    - type: textarea
+      id: additional
+      attributes:
+          label: Additional Context
+          description: Add any other context about the feature request here.
+          placeholder: Any other relevant information...
+      validations:
+          required: false
+
+    - type: checkboxes
+      id: checklist
+      attributes:
+          label: Pre-submission Checklist
+          description: Please confirm the following before submitting
+          options:
+              - label: I have searched existing issues to ensure this hasn't been requested
+                required: true
+              - label: I have clearly described the problem this feature solves
+                required: true
+              - label: I have considered alternative solutions
+                required: false
+
+    - type: markdown
+      attributes:
+          value: |
+              ---
+
+              ### 📋 For Maintainers
+
+              When triaging this feature request, please set:
+              - **Type**: `feat` (new feature) / `refactor` (improvement) / `perf` (performance)
+              - **Priority**: P0 (Critical) / P1 (High) / P2 (Medium) / P3 (Low) / P4 (Nice to have)
+              - **Size**: XS (< 1 day) / S (1-2 days) / M (3-5 days) / L (1-2 weeks) / XL (> 2 weeks)
+              - **Feature Area**: Backend / Frontend / Testing / Documentation / Infrastructure / Auth & Security
+              - **Milestone**: MVP / Alpha / Beta / Release Candidate / Release 1.0
+
+              Consider:
+              - Dependencies on other features
+              - Breaking changes
+              - Database migrations required
+              - Documentation updates needed
