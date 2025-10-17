@@ -57,7 +57,7 @@ export function canEditBoard(user: User | null, board: Board): boolean {
  * Check if a user can delete a specific board
  * - Only administrators can delete boards
  */
-export function canDeleteBoard(user: User | null, board: Board): boolean {
+export function canDeleteBoard(user: User | null, _board: Board): boolean {
   if (!user) return false;
 
   // Only admins can delete boards
