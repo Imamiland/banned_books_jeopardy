@@ -1,0 +1,169 @@
+---
+name: Project Automation
+
+on:
+    issues:
+        types:
+            - opened
+            - reopened
+            - closed
+            - labeled
+            - unlabeled
+    pull_request:
+        types:
+            - opened
+            - closed
+            - reopened
+            - ready_for_review
+            - converted_to_draft
+
+permissions:
+    contents: read
+    issues: write
+    pull-requests: write
+    repository-projects: write
+
+jobs:
+    auto-label:
+        runs-on: ubuntu-latest
+        name: Auto-label issues and PRs
+        if: github.event_name == 'issues'
+        steps:
+            - name: Add bug label for fix type
+              uses: actions/github-script@v7
+              if: |
+                  contains(github.event.issue.body, 'Type: fix') ||
+                  contains(github.event.issue.body, 'type:fix')
+              with:
+                  script: |
+                      await github.rest.issues.addLabels({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                        labels: ['bug']
+                      });
+
+            - name: Add enhancement label for feat type
+              uses: actions/github-script@v7
+              if: |
+                  contains(github.event.issue.body, 'Type: feat') ||
+                  contains(github.event.issue.body, 'type:feat')
+              with:
+                  script: |
+                      await github.rest.issues.addLabels({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                        labels: ['enhancement']
+                      });
+
+            - name: Add documentation label for docs type
+              uses: actions/github-script@v7
+              if: |
+                  contains(github.event.issue.body, 'Type: docs') ||
+                  contains(github.event.issue.body, 'type:docs')
+              with:
+                  script: |
+                      await github.rest.issues.addLabels({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                        labels: ['documentation']
+                      });
+
+    triage-priority:
+        runs-on: ubuntu-latest
+        name: Triage priority based on labels
+        if: github.event.action == 'labeled'
+        steps:
+            - name: Add P0 comment for critical bugs
+              if: contains(github.event.label.name, 'bug') && contains(github.event.label.name, 'critical')
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      await github.rest.issues.createComment({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                        body: '⚠️ **Critical Bug**: This issue has been marked as P0 priority and requires immediate attention.'
+                      });
+
+    sync-pr-status:
+        runs-on: ubuntu-latest
+        name: Sync PR status to linked issues
+        if: github.event_name == 'pull_request'
+        steps:
+            - name: Comment on PR ready for review
+              if: github.event.action == 'ready_for_review'
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      await github.rest.issues.createComment({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                        body: '✅ **Ready for Review**: This PR is ready for review. Please move linked issues to "In Review" in the project board.'
+                      });
+
+            - name: Comment on PR merged
+              if: github.event.action == 'closed' && github.event.pull_request.merged
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      await github.rest.issues.createComment({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                        body: '🎉 **Merged**: This PR has been merged. Linked issues should be moved to "Done" in the project board.'
+                      });
+
+    welcome:
+        runs-on: ubuntu-latest
+        name: Welcome new contributors
+        if: github.event.action == 'opened' && github.event.issue.user.type != 'Bot'
+        steps:
+            - name: Check if first time contributor
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const creator = context.payload.issue.user.login;
+                      const { data: issues } = await github.rest.issues.listForRepo({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        creator: creator,
+                        state: 'all'
+                      });
+
+                      if (issues.length === 1) {
+                        await github.rest.issues.createComment({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: context.issue.number,
+                          body: `👋 Welcome @${creator}! Thanks for opening your first issue in the Banned Books Jeopardy project.
+                          We'll review it and get back to you soon.
+
+                      Please make sure you've provided:
+                      - Clear description of the issue/feature
+                      - Steps to reproduce (if it's a bug)
+                      - Expected vs actual behavior
+                      - Any relevant screenshots or logs
+
+                      Check out our [Contributing Guide](../CONTRIBUTING.md) for more information.`
+                        });
+                      }
+
+    auto-assign:
+        runs-on: ubuntu-latest
+        name: Auto-assign issues to project maintainer
+        if: github.event.action == 'labeled' && contains(github.event.label.name, 'needs triage')
+        steps:
+            - name: Assign to maintainer
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      await github.rest.issues.addAssignees({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.issue.number,
+                        assignees: ['AliSajid']
+                      });
