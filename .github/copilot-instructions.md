@@ -77,12 +77,12 @@ pnpm dev                    # Start on :5173
 
 - Import in `app.css`: `@import 'tailwindcss';`
 - Use `@plugin` for official plugins (typography, forms, etc.)
-- Define custom colors with `@theme` directive:
+- Define custom colors by adding CSS variables to the `:root` selector in your CSS:
 
   ```css
-  @theme {
-    --color-jeopardy-blue: #060ce9;
-    --color-jeopardy-gold: #ffd700;
+  :root {
+    --color-jeopardy-blue: rgb(6, 12, 233);
+    --color-jeopardy-gold: rgb(255, 215, 0);
   }
   ```
 
