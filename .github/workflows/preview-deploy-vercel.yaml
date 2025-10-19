@@ -42,7 +42,7 @@ jobs:
             - name: Install dependencies
               run: pnpm install
             - name: Ensure playwright has the latest browser binaries
-              run: pnpx playwright install --with-deps && pnpx playwright install --with-deps
+              run: pnpx playwright install --with-deps
             - name: Ensure project is formatted and linted
               run: pnpm run lint
             - name: Ensure project syncs the configs
