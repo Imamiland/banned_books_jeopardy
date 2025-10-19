@@ -27,7 +27,7 @@ vite.config.ts.timestamp-*
 # Unignore the lib directory
 !lib/
 
-megalinter-reports/
+mega-linter-reports/
 
 issue-creator
 
