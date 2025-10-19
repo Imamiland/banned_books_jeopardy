@@ -1,0 +1,118 @@
+----------------------------------------------------------------------------------------------------
+------------------------------------ MegaLinter, by OX Security ------------------------------------
+----------------------------------------------------------------------------------------------------
+ - Image Creation Date: 2024-11-23T10:44:56Z
+ - Image Revision: 1fc052d03c7a43c78fe0fee19c9d648b749e0c01
+ - Image Version: v8.3.0
+----------------------------------------------------------------------------------------------------
+The MegaLinter documentation can be found at:
+ - https://megalinter.io/8.3.0
+----------------------------------------------------------------------------------------------------
+::group::MegaLinter initialization (expand for details)
+MegaLinter will analyze workspace [/github/workspace]
+GITHUB_REPOSITORY: Imamiland/banned_books_jeopardy
+GITHUB_REF: refs/pull/160/merge
+GITHUB_RUN_ID: 18637840680
+
+
+[Activation] JAVASCRIPT_ES has been set inactive, as none of these files has been found: ['.eslintrc.json', '.eslintrc.yml', '.eslintrc.yaml', '.eslintrc.js', '.eslintrc.cjs', 'package.json:eslintConfig']
+CLOJURE_CLJSTYLE has been disabled in MegaLinter for the following reason: Bug on cljstyle on alpine linux: https://github.com/greglook/cljstyle/issues/104
+JSON_ESLINT_PLUGIN_JSONC has been disabled in MegaLinter for the following reason: Bug in eslint-plugin-jsonc : https://github.com/ota-meshi/eslint-plugin-jsonc/issues/328
+MAKEFILE_CHECKMAKE has been disabled in MegaLinter for the following reason: Security issues: https://github.com/mrtazz/checkmake/issues/99
+MARKDOWN_REMARK_LINT has been disabled in MegaLinter for the following reason: Bug in remark-lint: https://github.com/remarkjs/remark-lint/issues/322
+Skipped linters: ACTION_ACTIONLINT, ANSIBLE_ANSIBLE_LINT, API_SPECTRAL, ARM_ARM_TTK, BASH_EXEC, BASH_SHELLCHECK, BASH_SHFMT, BICEP_BICEP_LINTER, CLOJURE_CLJSTYLE, CLOJURE_CLJ_KONDO, CLOUDFORMATION_CFN_LINT, COFFEE_COFFEELINT, COPYPASTE_JSCPD, CPP_CLANG_FORMAT, CPP_CPPLINT, CSHARP_CSHARPIER, CSHARP_DOTNET_FORMAT, CSHARP_ROSLYNATOR, CSS_STYLELINT, C_CLANG_FORMAT, C_CPPLINT, DART_DARTANALYZER, DOCKERFILE_HADOLINT, EDITORCONFIG_EDITORCONFIG_CHECKER, ENV_DOTENV_LINTER, GHERKIN_GHERKIN_LINT, GO_GOLANGCI_LINT, GO_REVIVE, GRAPHQL_GRAPHQL_SCHEMA_LINTER, GROOVY_NPM_GROOVY_LINT, HTML_DJLINT, HTML_HTMLHINT, JAVASCRIPT_ES, JAVASCRIPT_STANDARD, JAVA_CHECKSTYLE, JAVA_PMD, JSON_ESLINT_PLUGIN_JSONC, JSON_NPM_PACKAGE_JSON_LINT, JSON_V8R, JSX_ESLINT, KOTLIN_DETEKT, KOTLIN_KTLINT, KUBERNETES_HELM, KUBERNETES_KUBECONFORM, KUBERNETES_KUBESCAPE, LATEX_CHKTEX, LUA_LUACHECK, LUA_SELENE, LUA_STYLUA, MAKEFILE_CHECKMAKE, MARKDOWN_MARKDOWN_LINK_CHECK, MARKDOWN_MARKDOWN_TABLE_FORMATTER, MARKDOWN_REMARK_LINT, PERL_PERLCRITIC, PHP_PHPCS, PHP_PHPCSFIXER, PHP_PHPLINT, PHP_PHPSTAN, PHP_PSALM, POWERSHELL_POWERSHELL, POWERSHELL_POWERSHELL_FORMATTER, PROTOBUF_PROTOLINT, PUPPET_PUPPET_LINT, PYTHON_BANDIT, PYTHON_BLACK, PYTHON_FLAKE8, PYTHON_ISORT, PYTHON_MYPY, PYTHON_PYLINT, PYTHON_PYRIGHT, PYTHON_RUFF, RAKU_RAKU, REPOSITORY_CHECKOV, REPOSITORY_DEVSKIM, REPOSITORY_DUSTILOCK, REPOSITORY_GITLEAKS, REPOSITORY_GIT_DIFF, REPOSITORY_GRYPE, REPOSITORY_KICS, REPOSITORY_LS_LINT, REPOSITORY_SECRETLINT, REPOSITORY_SEMGREP, REPOSITORY_SYFT, REPOSITORY_TRIVY, REPOSITORY_TRIVY_SBOM, REPOSITORY_TRUFFLEHOG, RST_RSTCHECK, RST_RSTFMT, RST_RST_LINT, RUBY_RUBOCOP, RUST_CLIPPY, R_LINTR, SALESFORCE_LIGHTNING_FLOW_SCANNER, SALESFORCE_SFDX_SCANNER_APEX, SALESFORCE_SFDX_SCANNER_AURA, SALESFORCE_SFDX_SCANNER_LWC, SCALA_SCALAFIX, SNAKEMAKE_LINT, SNAKEMAKE_SNAKEFMT, SPELL_CSPELL, SPELL_LYCHEE, SPELL_PROSELINT, SPELL_VALE, SQL_SQLFLUFF, SQL_TSQLLINT, SWIFT_SWIFTLINT, TEKTON_TEKTON_LINT, TERRAFORM_TERRAFORM_FMT, TERRAFORM_TERRAGRUNT, TERRAFORM_TERRASCAN, TERRAFORM_TFLINT, TSX_ESLINT, TYPESCRIPT_ES, TYPESCRIPT_PRETTIER, TYPESCRIPT_STANDARD, VBDOTNET_DOTNET_FORMAT, XML_XMLLINT, YAML_V8R, YAML_YAMLLINT
+[ApiReporter] Not enabled as API_REPORTER is not defined to true
+To receive reports as email, please set variable EMAIL_REPORTER_EMAIL
+::endgroup::
+::group::MegaLinter now collects the files to analyse (expand for details)
+Listing all files in directory [/github/workspace], then filter with:
+- File extensions: .js, .json, .md, .yaml, .yml
+- Including regex: .*\.(js|cjs|mjs|ts|svelte|json|yml|yaml|md)$
+- Excluding regex: (/__tests__/|/node_modules/|/dist/)
+- Excluding .gitignored files [0]: 
+Kept [39] files on [70] found files
+
++----MATCHING LINTERS-------+------------+----------------+------------+
+| Descriptor | Linter       | Criteria   | Matching files | Format/Fix |
++------------+--------------+------------+----------------+------------+
+| JAVASCRIPT | prettier     | .js        | 3              | yes        |
+| JSON       | jsonlint     | .json      | 7              | yes        |
+| JSON       | prettier     | .json      | 7              | yes        |
+| MARKDOWN   | markdownlint | .md        | 12             | yes        |
+| YAML       | prettier     | .yml|.yaml | 17             | yes        |
++------------+--------------+------------+----------------+------------+
+::endgroup::
+Processing linters on [4] parallel cores… (can be decreased with variable PARALLEL_PROCESS_NUMBER in case of performance issues)
+[GitHub Status Reporter] Error posting Status for JAVASCRIPTwith prettier: 403
+GitHub API response: {"message":"Resource not accessible by integration","documentation_url":"https://docs.github.com/rest/commits/statuses#create-a-commit-status","status":"403"}
+[GitHub Status Reporter] Error posting Status for YAMLwith prettier: 403
+GitHub API response: {"message":"Resource not accessible by integration","documentation_url":"https://docs.github.com/rest/commits/statuses#create-a-commit-status","status":"403"}
+[GitHub Status Reporter] Error posting Status for JSONwith jsonlint: 403
+GitHub API response: {"message":"Resource not accessible by integration","documentation_url":"https://docs.github.com/rest/commits/statuses#create-a-commit-status","status":"403"}
+::group::[33m✅ Linted [YAML] files with [prettier]: Found 1 non blocking error(s) - (0.33s)[0m (expand for details)
+- Using [prettier v3.3.3] https://megalinter.io/8.3.0/descriptors/yaml_prettier
+- MegaLinter key: [YAML_PRETTIER]
+- Rules config: identified by [prettier]
+- Number of files analyzed: [17]
+- Command: [prettier --write .github/ISSUE_TEMPLATE/bug_report.yaml .github/ISSUE_TEMPLATE/config.yaml .github/ISSUE_TEMPLATE/documentation.yaml .github/ISSUE_TEMPLATE/feature_request.yaml .github/workflows/codeql.yaml .github/workflows/dependency-review.yaml .g...(truncated)]
+--Error detail:
+[error] Cannot find package 'prettier-plugin-svelte' imported from /github/workspace/noop.js
+
+::endgroup::
+::group::[33m✅ Linted [JAVASCRIPT] files with [prettier]: Found 1 non blocking error(s) - (0.33s)[0m (expand for details)
+- Using [prettier v3.3.3] https://megalinter.io/8.3.0/descriptors/javascript_prettier
+- MegaLinter key: [JAVASCRIPT_PRETTIER]
+- Rules config: [/github/workspace/.prettierrc]
+- Number of files analyzed: [3]
+- Command: [prettier --write --config /github/workspace/.prettierrc eslint.config.js postcss.config.js svelte.config.js]
+--Error detail:
+[error] Cannot find package 'prettier-plugin-svelte' imported from /github/workspace/noop.js
+
+::endgroup::
+::group::[32m✅ Linted [JSON] files with [jsonlint] successfully - (0.2s)[0m (expand for details)
+- Using [jsonlint v16.0.0] https://megalinter.io/8.3.0/descriptors/json_jsonlint
+- MegaLinter key: [JSON_JSONLINT]
+- Rules config: identified by [jsonlint]
+- Number of files analyzed: [7]
+- Command: [jsonlint --quiet .cspell.json .jscpd.json .jsonlintrc.json .markdownlint.json package.json renovate.json tsconfig.json]
+::endgroup::
+[GitHub Status Reporter] Error posting Status for JSONwith prettier: 403
+GitHub API response: {"message":"Resource not accessible by integration","documentation_url":"https://docs.github.com/rest/commits/statuses#create-a-commit-status","status":"403"}
+::group::[33m✅ Linted [JSON] files with [prettier]: Found 1 non blocking error(s) - (0.31s)[0m (expand for details)
+- Using [prettier v3.3.3] https://megalinter.io/8.3.0/descriptors/json_prettier
+- MegaLinter key: [JSON_PRETTIER]
+- Rules config: identified by [prettier]
+- Number of files analyzed: [7]
+- Command: [prettier --write .cspell.json .jscpd.json .jsonlintrc.json .markdownlint.json package.json renovate.json tsconfig.json]
+--Error detail:
+[error] Cannot find package 'prettier-plugin-svelte' imported from /github/workspace/noop.js
+
+::endgroup::
+[GitHub Status Reporter] Error posting Status for MARKDOWNwith markdownlint: 403
+GitHub API response: {"message":"Resource not accessible by integration","documentation_url":"https://docs.github.com/rest/commits/statuses#create-a-commit-status","status":"403"}
+::group::[33m✅ Linted [MARKDOWN] files with [markdownlint]: Found 3 non blocking error(s) - (1.31s)[0m (expand for details)
+- Using [markdownlint v0.43.0] https://megalinter.io/8.3.0/descriptors/markdown_markdownlint
+- MegaLinter key: [MARKDOWN_MARKDOWNLINT]
+- Rules config: [/github/workspace/.markdownlint.json]
+- Number of files analyzed: [12]
+- Command: [markdownlint --fix -c /github/workspace/.markdownlint.json .github/PROJECT_SETUP.md .github/copilot-instructions.md .github/pull_request_template.md AI_ONBOARDING.md CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md DEPLOYMENT.md GOVERNANCE.md README.m...(truncated)]
+--Error detail:
+CHANGELOG.md:4 MD001/heading-increment Heading levels should only increment by one level at a time [Expected: h2; Actual: h3]
+CHANGELOG.md:11 MD025/single-title/single-h1 Multiple top-level headings in the same document [Context: "1.0.0-next.1 (2025-01-02)"]
+CHANGELOG.md:13 MD001/heading-increment Heading levels should only increment by one level at a time [Expected: h2; Actual: h3]
+
+::endgroup::
+[GitHub Comment Reporter] Posted summary as comment on Imamiland/banned_books_jeopardy #PR160
+[Updated Sources Reporter] copied 1 fixed source files in folder mega-linter-reports/updated_sources.
+
++----SUMMARY----+--------------+---------------+-------+-------+--------+--------------+
+| Descriptor    | Linter       | Mode          | Files | Fixed | Errors | Elapsed time |
++---------------+--------------+---------------+-------+-------+--------+--------------+
+| ⚠️ JAVASCRIPT | prettier     | list_of_files |     3 |     0 |      1 |        0.33s |
+| ✅ JSON       | jsonlint     | list_of_files |     7 |       |      0 |         0.2s |
+| ⚠️ JSON       | prettier     | list_of_files |     7 |     0 |      1 |        0.31s |
+| ⚠️ MARKDOWN   | markdownlint | list_of_files |    12 |     1 |      3 |        1.31s |
+| ⚠️ YAML       | prettier     | list_of_files |    17 |     0 |      1 |        0.33s |
++---------------+--------------+---------------+-------+-------+--------+--------------+
+
+[33m⚠️ Successfully linted all files, but with ignored errors[0m
