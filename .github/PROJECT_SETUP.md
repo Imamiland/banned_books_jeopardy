@@ -221,15 +221,12 @@ Go to project settings → Workflows and enable these automations:
 #### Auto-set status based on activity
 
 1. **Trigger**: Item reopened
-
    - **Action**: Set Status to Todo
 
 2. **Trigger**: Pull request linked to an issue
-
    - **Action**: Set Status to In Review
 
 3. **Trigger**: Item closed
-
    - **Action**: Set Status to Done
 
 4. **Trigger**: Item closed as not planned
@@ -238,12 +235,10 @@ Go to project settings → Workflows and enable these automations:
 #### Auto-assign fields
 
 1. **Trigger**: Issue labeled with "bug"
-
    - **Action**: Set Type to fix
    - **Action**: Set Priority to P1
 
 2. **Trigger**: Issue labeled with "enhancement"
-
    - **Action**: Set Type to feat
    - **Action**: Set Priority to P2
 

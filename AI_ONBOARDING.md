@@ -242,19 +242,16 @@ The application uses Auth0 for authentication with role-based access control (RB
 #### Auth0 Setup
 
 1. **Create Auth0 Application**
-
    - Type: Regular Web Application
    - Allowed Callback URLs: `http://localhost:5173/auth/callback`, `https://your-domain.vercel.app/auth/callback`
    - Allowed Logout URLs: `http://localhost:5173`, `https://your-domain.vercel.app`
 
 2. **Configure Auth0 Roles** (in Auth0 Dashboard → User Management → Roles)
-
    - `administrator`: Full access (create, edit any board, manage users)
    - `creator`: Create new boards, edit own boards
    - `player`: View and play games only
 
 3. **Add Roles to User Metadata**
-
    - Use Auth0 Actions or Rules to add `roles` to user tokens
    - Example Action:
 
@@ -385,19 +382,16 @@ DATABASE_URL="file:local.db"
 This project uses **mise** (formerly rtx) to manage:
 
 1. **Tool Versions** (`.mise.toml`):
-
    - Node.js 22.20.0
    - Python 3.12 (for pre-commit hooks)
    - pre-commit 4.3.0
 
 2. **Environment Variables**:
-
    - mise automatically loads variables from `.env` file
    - No need to manually source environment files
    - Variables are scoped to the project directory
 
 3. **Benefits**:
-
    - Automatic tool version switching when entering the project directory
    - Team-wide consistency (everyone uses the same versions)
    - Simplified onboarding (mise handles tool installation)

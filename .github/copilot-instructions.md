@@ -134,7 +134,6 @@ chore(deps): upgrade drizzle-orm to 0.44.6
 The project uses modern GitHub Form templates (YAML format) with structured fields and validation:
 
 1. **Bug Report** (`bug_report.yml`):
-
    - Structured fields: description, reproduction steps, expected/actual behavior
    - Dropdowns: severity (Critical/High/Medium/Low), browser, OS
    - Version fields: browser version, Node.js version
@@ -143,7 +142,6 @@ The project uses modern GitHub Form templates (YAML format) with structured fiel
    - Required pre-submission checklist
 
 2. **Feature Request** (`feature_request.yml`):
-
    - Structured fields: description, problem statement, proposed solution
    - Feature area dropdown: Backend, Frontend, Testing, Documentation, Infrastructure, Auth & Security, Game Mechanics, Admin Dashboard, Board Creation/Editing, Sound/Audio, Animations/UI
    - Priority dropdown (P0-P4)
@@ -152,7 +150,6 @@ The project uses modern GitHub Form templates (YAML format) with structured fiel
    - Mockups/examples upload area
 
 3. **Documentation Update** (`documentation.yml`):
-
    - Documentation location checkboxes
    - Issue type dropdown: Missing, Incorrect/outdated, Unclear, Broken links, Typo/grammar, etc.
    - Current content and proposed changes sections (markdown rendered)
@@ -358,7 +355,6 @@ export function stopSound(soundName: string): void {
 **Setup Configuration**:
 
 1. **Auth0 Application Settings**:
-
    - Application Type: Regular Web Application
    - Allowed Callback URLs: `http://localhost:5173/auth/callback`, `https://your-domain.vercel.app/auth/callback`
    - Allowed Logout URLs: `http://localhost:5173`, `https://your-domain.vercel.app`
@@ -992,43 +988,36 @@ pnpm test:e2e --project=chromium  # Specific browser
 **Next Steps** (Priority Order):
 
 1. **Database Schema** (`src/lib/server/db/schema.ts`):
-
    - Implement boards, categories, questions tables
    - Add foreign key relationships
    - Run `pnpm db:push` to sync
 
 2. **Question Curation**:
-
    - Research banned books trivia
    - Create 5 categories with 5 questions each
    - Store in database or seed script
 
 3. **Game Board UI** (`src/routes/game/[boardId]/+page.svelte`):
-
    - 5×5 grid layout with Tailwind
    - Category headers (top row)
    - Question tiles with point values
 
 4. **Tile Component** (`src/lib/components/QuestionTile.svelte`):
-
    - Click handler
    - Flip animation (CSS 3D transform)
    - State management (unplayed/playing/answered)
 
 5. **Timer Component** (`src/lib/components/Timer.svelte`):
-
    - Countdown from 30 seconds
    - Visual display
    - Sound integration
 
 6. **Sound Utilities** (`src/lib/utils/sounds.ts`):
-
    - Audio caching
    - Play/stop functions
    - Replace placeholder MP3s with actual sounds
 
 7. **Auth0 Integration**:
-
    - Install `@auth0/sveltekit-auth0`
    - Configure hooks.server.ts
    - Implement login/logout routes
