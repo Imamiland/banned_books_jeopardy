@@ -92,7 +92,9 @@ export function preloadAllSounds(): void {
     'board-complete'
   ];
 
-  sounds.forEach(preloadSound);
+  for (const s of sounds) {
+    preloadSound(s);
+  }
 }
 
 /**
@@ -100,9 +102,9 @@ export function preloadAllSounds(): void {
  * Useful for cleaning up resources
  */
 export function clearSoundCache(): void {
-  soundCache.forEach((audio) => {
+  for (const audio of soundCache.values()) {
     audio.pause();
     audio.src = '';
-  });
+  }
   soundCache.clear();
 }

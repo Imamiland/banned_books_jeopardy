@@ -48,6 +48,7 @@ repos:
                 - prettier-plugin-svelte@3.4.0
                 - prettier-plugin-multiline-arrays@4.0.3
                 - prettier-plugin-organize-imports@4.3.0
+                - prettier-plugin-tailwindcss@0.6.14
             files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
             types: [file]
     - repo: https://github.com/rbubley/mirrors-prettier

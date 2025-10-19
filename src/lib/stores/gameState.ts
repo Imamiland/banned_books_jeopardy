@@ -155,11 +155,11 @@ function createGameStateStore() {
      */
     clearAll: () => {
       const keys = Object.keys(localStorage);
-      keys.forEach((key) => {
+      for (const key of keys) {
         if (key.startsWith('game-state-')) {
           localStorage.removeItem(key);
         }
-      });
+      }
       set(null);
       console.log('All game states cleared');
     }
