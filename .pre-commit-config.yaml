@@ -40,13 +40,14 @@ repos:
       hooks:
           - id: eslint
             additional_dependencies:
-                - eslint@v9.15.0
-                - '@typescript-eslint/eslint-plugin@8.14.0'
-                - eslint-plugin-svelte@2.46.0
-                - prettier@3.4.2
-                - prettier-plugin-svelte@3.3.2
-                - prettier-plugin-multiline-arrays@4.0.1
-                - prettier-plugin-organize-imports@4.1.0
+                - eslint@v9.37.0
+                - '@typescript-eslint/eslint-plugin@8.46.0'
+                - eslint-config-prettier@10.1.8
+                - eslint-plugin-svelte@3.12.4
+                - prettier@3.6.2
+                - prettier-plugin-svelte@3.4.0
+                - prettier-plugin-multiline-arrays@4.0.3
+                - prettier-plugin-organize-imports@4.3.0
             files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
             types: [file]
     - repo: https://github.com/rbubley/mirrors-prettier
@@ -54,14 +55,11 @@ repos:
       hooks:
           - id: prettier
             additional_dependencies:
-                - prettier@3.4.2
-                - prettier-plugin-svelte@3.3.2
-                - prettier-plugin-multiline-arrays@4.0.1
-                - prettier-plugin-organize-imports@4.1.0
-    # - repo: https://github.com/oxsecurity/megalinter
-    #   rev: v9.1.0
-    #   hooks:
-    #       - id: megalinter-full
+                - prettier@3.6.2
+                - prettier-plugin-svelte@3.4.0
+                - prettier-plugin-multiline-arrays@4.0.3
+                - prettier-plugin-organize-imports@4.3.0
+                - prettier-plugin-tailwindcss@0.6.14
     - repo: https://github.com/Lucas-C/pre-commit-hooks
       rev: v1.5.5
       hooks:
@@ -130,3 +128,10 @@ repos:
             files: 'package.json'
             pass_filenames: false
             description: 'Lint the browserslist entry/files'
+          - id: eslint
+            name: eslint
+            entry: pnpm exec eslint
+            language: system
+            types: [file]
+            files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
+            description: "Run ESLint using the project's installed version"

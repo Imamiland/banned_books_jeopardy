@@ -17,12 +17,10 @@ The automatic deployment follows the following channels.
 ### Deployment Workflow
 
 1. **Push to `next` branch** OR **Pull Request against `next` branch**:
-
    - Automatic deployment to `next` subdomain.
    - Used for testing new features before production release.
 
 2. **Push to `main` branch**:
-
    - Automatic deployment to the production domain.
 
 3. **Push to other branches**:
