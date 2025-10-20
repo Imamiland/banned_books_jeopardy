@@ -133,18 +133,124 @@ Enhancement suggestions are tracked as [GitHub issues](/issues).
 
 Please ensure you have the following set up before contributing code:
 
-- **Pre-commit Hooks**: This project uses `pre-commit` to automate linting and formatting. Run `pre-commit install` after cloning the repository.
-- **Linting**: All code must pass linting checks before committing. Pre-commit hooks will automatically run linters on changed files. To manually lint all files, run:
+#### Prerequisites
+
+This project uses [**mise**](https://mise.jdx.dev/) to manage all development tools and their versions. mise replaces the need for separate installations of Node.js, pnpm, Python, and other tools.
+
+**Install mise** (one-time setup):
 
 ```bash
+# macOS/Linux
+curl https://mise.run | sh
+
+# Or via Homebrew
+brew install mise
+
+# Or via other package managers - see https://mise.jdx.dev/getting-started.html
+```
+
+#### Initial Setup
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/Imamiland/banned_books_jeopardy.git
+   cd banned_books_jeopardy
+   ```
+
+2. **Trust and activate mise** (installs all required tools automatically):
+
+   ```bash
+   mise trust && mise install
+   ```
+
+   This command:
+   - Installs Node.js 22.20.0
+   - Installs pnpm 10.14.0
+   - Installs Python 3.12
+   - Installs pre-commit 4.3.0
+   - Installs development tools (Playwright, Drizzle Kit, Prettier, ESLint, TypeScript, Vercel CLI)
+   - Loads environment variables from `.env`
+
+3. **Run the complete setup** (installs dependencies and pre-commit hooks):
+
+   ```bash
+   mise run setup
+   ```
+
+   This runs:
+   - `pnpm install` - Install Node.js dependencies
+   - `pre-commit install` - Set up Git hooks for linting and formatting
+
+4. **Verify the setup**:
+
+   ```bash
+   mise run info
+   ```
+
+   This displays your environment information (Node version, pnpm version, Git branch, etc.)
+
+#### Available mise Tasks
+
+Run `mise tasks` to see all available commands, or use these common ones:
+
+```bash
+# Development
+mise run dev              # Start development server (http://localhost:5173)
+mise run build            # Build for production
+mise run preview          # Preview production build
+mise run check            # Type-check with svelte-check
+
+# Testing
+mise run test             # Run all tests (unit + E2E)
+mise run test:unit        # Run Vitest unit tests
+mise run test:e2e         # Run Playwright E2E tests
+mise run test:e2e:ui      # Open Playwright UI mode
+
+# Linting & Formatting
+mise run lint             # Run ESLint and Prettier checks
+mise run lint:fix         # Auto-fix linting/formatting issues
+mise run format           # Format code with Prettier
+mise run precommit        # Run pre-commit hooks manually
+
+# Database
+mise run db:push          # Push schema changes (development)
+mise run db:migrate       # Generate migrations (production)
+mise run db:studio        # Open Drizzle Studio GUI
+
+# Utilities
+mise run clean            # Clean build artifacts
+mise run update           # Update all dependencies
+mise run ci               # Run full CI pipeline locally
+```
+
+For the full list with descriptions, run:
+
+```bash
+mise tasks
+```
+
+#### Pre-commit Hooks
+
+This project uses `pre-commit` to automate linting and formatting. Hooks are automatically installed by `mise run setup`.
+
+To manually run pre-commit checks on all files:
+
+```bash
+mise run precommit
+# Or directly:
 pre-commit run --all-files
 ```
 
-- **Development Environment**: Ensure the site builds and previews correctly on your local setup before submitting changes:
+#### Development Workflow
+
+Ensure the site builds and previews correctly on your local setup before submitting changes:
 
 ```bash
-pnpm install
-pnpm dev
+mise run dev     # Start dev server
+mise run check   # Type-check
+mise run test    # Run tests
+mise run build   # Build for production
 ```
 
 ### Improving The Documentation

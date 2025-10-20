@@ -1,7 +1,7 @@
 # AI Assistant Onboarding Guide
 
-**Project**: Banned Books Jeopardy  
-**Repository**: <https://github.com/Imamiland/banned_books_jeopardy>  
+**Project**: Banned Books Jeopardy
+**Repository**: <https://github.com/Imamiland/banned_books_jeopardy>
 **Purpose**: Interactive Jeopardy game for live Banned Books Coalition events at University of Toledo
 
 ---
@@ -442,68 +442,124 @@ cd banned_books_jeopardy
 # 2. Install mise (if not already installed)
 curl https://mise.run | sh
 # Follow the instructions to add mise to your shell
+# Or use: brew install mise (macOS)
 
-# 3. Trust and activate mise configuration
-mise trust
-mise install
+# 3. Trust and activate mise configuration (installs all tools automatically)
+mise trust && mise install
 
-# 4. Install dependencies
-pnpm install
+# This installs:
+#   - Node.js 22.20.0
+#   - pnpm 10.14.0
+#   - Python 3.12
+#   - pre-commit 4.3.0
+#   - Development tools: Playwright, Drizzle Kit, Prettier, ESLint, TypeScript, Vercel CLI
+
+# 4. Complete setup (install dependencies + pre-commit hooks)
+mise run setup
 
 # 5. Copy environment variables
 cp .env.example .env
-# Edit .env with your credentials
-# Note: mise will automatically load variables from .env
+# Edit .env with your credentials (DATABASE_URL, AUTH0_*, etc.)
+# Note: mise automatically loads variables from .env
 
 # 6. Set up database schema
-pnpm db:push
+mise run db:push
 
 # 7. Start development server
-pnpm dev
+mise run dev
 ```
 
 The app will be available at `http://localhost:5173`
 
+**What `mise run setup` does**:
+
+1. Runs `pnpm install` - Installs all Node.js dependencies
+2. Runs `pre-commit install` - Sets up Git hooks for automatic linting and formatting
+
 **Note**: `mise` automatically:
 
-- Installs Node.js 22.20.0 (specified in `.mise.toml`)
+- Installs and manages all tool versions (Node.js, pnpm, Python, etc.)
 - Loads environment variables from `.env` file
-- Sets up pre-commit hooks (Python 3.12 for pre-commit tools)
-- Ensures consistent tool versions across the team
+- Ensures consistent tool versions across the entire team
+- Provides 20+ development tasks (run `mise tasks` to see all)
 
 ### Development Commands
 
+All development commands are available through mise for consistency with CI/CD. You can use either `mise run <task>` or the traditional `pnpm` commands.
+
 ```bash
-# Start dev server with hot reload
-pnpm dev
-
-# Type checking
-pnpm check
-pnpm check:watch  # Watch mode
-
-# Linting & Formatting
-pnpm lint         # Check for issues
-pnpm format       # Auto-fix formatting
+# Development Server
+mise run dev              # Start dev server with hot reload (http://localhost:5173)
+mise run build            # Build for production
+mise run preview          # Preview production build (http://localhost:4173)
+mise run check            # Type-check with svelte-check
+mise run watch            # Type-check in watch mode
 
 # Testing
-pnpm test         # Run all tests
-pnpm test:unit    # Unit tests only
-pnpm test:e2e     # E2E tests only
+mise run test             # Run all tests (unit + E2E)
+mise run test:unit        # Run Vitest unit tests
+mise run test:unit:watch  # Unit tests in watch mode
+mise run test:e2e         # Run Playwright E2E tests
+mise run test:e2e:ui      # Playwright UI mode (interactive)
+mise run test:e2e:debug   # Playwright debug mode
+
+# Linting & Formatting
+mise run lint             # Run ESLint and Prettier checks
+mise run lint:fix         # Auto-fix linting and formatting issues
+mise run format           # Format code with Prettier
+mise run format:check     # Check formatting without modifying files
 
 # Database
-pnpm db:push      # Push schema changes
-pnpm db:migrate   # Generate migrations
-pnpm db:studio    # Open database GUI
+mise run db:push          # Push schema changes to database (development)
+mise run db:migrate       # Generate and run migrations (production)
+mise run db:studio        # Open Drizzle Studio GUI for database inspection
+mise run db:seed          # Seed database with sample data (if available)
+
+# Utility Commands
+mise run clean            # Clean all build artifacts and caches
+mise run setup            # Complete project setup (install + pre-commit hooks)
+mise run update           # Update all dependencies (npm + pre-commit)
+mise run ci               # Run full CI pipeline locally (lint + check + test + build)
+mise run precommit        # Run pre-commit checks manually
+mise run info             # Display project and environment information
+```
+
+**Alternative**: You can still use traditional pnpm commands:
+
+```bash
+pnpm dev              # Same as: mise run dev
+pnpm test             # Same as: mise run test
+pnpm lint             # Same as: mise run lint
+```
+
+**Why use mise run?**
+
+- ✅ Consistent with CI/CD workflows (GitHub Actions use `mise run`)
+- ✅ Automatically uses the correct tool versions from `.mise.toml`
+- ✅ Environment variables from `.env` are guaranteed to be loaded
+- ✅ Single source of truth for all development commands
+
+**View all available tasks:**
+
+```bash
+mise tasks              # List all tasks with descriptions
+mise run info           # Show environment and tool versions
+
+
+pnpm db:studio # Open database GUI
 
 # Build
-pnpm build        # Production build
-pnpm preview      # Preview production build
+
+pnpm build # Production build
+pnpm preview # Preview production build
 
 # mise commands (for version/env management)
-mise trust        # Trust configuration
-mise install      # Install required tools
-mise current      # Show active versions
-mise doctor       # Verify setup
+
+mise trust # Trust configuration
+mise install # Install required tools
+mise current # Show active versions
+mise doctor # Verify setup
+
 ```
 
 ---
@@ -1234,8 +1290,8 @@ mise doctor           # Verify mise configuration
 
 ---
 
-**Last Updated**: 2025-10-11  
-**Maintainer**: Imamiland  
+**Last Updated**: 2025-10-11
+**Maintainer**: Imamiland
 **License**: MIT
 
 For questions or issues with this onboarding guide, please open an issue on GitHub or contact the maintainers.

@@ -1,8 +1,219 @@
+# mise configuration for Banned Books Jeopardy
+# See: https://mise.jdx.dev/configuration.html
+
+# =============================================================================
+# Tool Version Management
+# =============================================================================
+# All development tools and their exact versions
+# Run `mise install` to install all tools
+
 [tools]
+# Runtime
 node = "22.20.0"
-pre-commit = "4.3.0"
+
+# Package manager (locked version for consistency)
+pnpm = "10.14.0"
+
+# Python tools
 python = "3.12"
+pre-commit = "4.3.0"
+
+# Development tools (installed via npm/pnpm)
+"npm:@playwright/test" = "latest" # E2E testing
+"npm:drizzle-kit" = "latest"      # Database migrations
+"npm:prettier" = "latest"         # Code formatting
+"npm:eslint" = "latest"           # Linting
+"npm:typescript" = "latest"       # Type checking
+"npm:vercel" = "latest"           # Deployment CLI
+
+# =============================================================================
+# Environment Variables
+# =============================================================================
+# Loaded in order: .env file, then static values below
 
 [env]
+# Load .env file first (contains DATABASE_URL, AUTH0_*, etc.)
 '_'.file = ".env"
+
+# Static environment variables
 NODE_ENV = "development"
+
+# Node.js memory and debugging options
+NODE_OPTIONS = "--max-old-space-size=4096"
+
+# Development URLs (override with .env if needed)
+VITE_DEV_SERVER_URL = "http://localhost:5173"
+PREVIEW_SERVER_URL = "http://localhost:4173"
+
+# =============================================================================
+# Task Definitions
+# =============================================================================
+# Run tasks with: mise run <task>
+# List all tasks: mise tasks
+
+# -----------------------------------------------------------------------------
+# Development Tasks
+# -----------------------------------------------------------------------------
+
+[tasks.dev]
+description = "Start development server with hot reload"
+run = "pnpm dev"
+
+[tasks.build]
+description = "Build production bundle"
+run = "pnpm build"
+depends = ["check"]                     # Type-check before building
+
+[tasks.preview]
+description = "Preview production build locally"
+run = "pnpm preview"
+depends = ["build"]
+
+[tasks.check]
+description = "Type-check entire codebase with svelte-check"
+run = "pnpm check"
+
+[tasks.watch]
+description = "Type-check in watch mode"
+run = "pnpm check --watch"
+
+# -----------------------------------------------------------------------------
+# Testing Tasks
+# -----------------------------------------------------------------------------
+
+[tasks.test]
+description = "Run all tests (unit + E2E)"
+depends = ["test:unit", "test:e2e"]
+
+[tasks."test:unit"]
+description = "Run Vitest unit tests"
+run = "pnpm test:unit"
+
+[tasks."test:unit:watch"]
+description = "Run Vitest unit tests in watch mode"
+run = "pnpm test:unit -- --watch"
+
+[tasks."test:unit:coverage"]
+description = "Run Vitest unit tests with coverage report"
+run = "pnpm test:unit -- --coverage"
+
+[tasks."test:e2e"]
+description = "Run Playwright E2E tests"
+run = "pnpm test:e2e"
+
+[tasks."test:e2e:ui"]
+description = "Run Playwright E2E tests in UI mode"
+run = "pnpm test:e2e -- --ui"
+
+[tasks."test:e2e:debug"]
+description = "Run Playwright E2E tests in debug mode"
+run = "pnpm test:e2e -- --debug"
+
+# -----------------------------------------------------------------------------
+# Linting & Formatting Tasks
+# -----------------------------------------------------------------------------
+
+[tasks.lint]
+description = "Run ESLint and Prettier checks"
+run = "pnpm lint"
+
+[tasks."lint:fix"]
+description = "Auto-fix ESLint and Prettier issues"
+run = "pnpm lint -- --fix && pnpm format"
+
+[tasks.format]
+description = "Format code with Prettier"
+run = "pnpm format"
+
+[tasks."format:check"]
+description = "Check code formatting without modifying files"
+run = "pnpm format -- --check"
+
+# -----------------------------------------------------------------------------
+# Database Tasks
+# -----------------------------------------------------------------------------
+
+[tasks."db:push"]
+description = "Push schema changes to database (development)"
+run = "pnpm db:push"
+
+[tasks."db:migrate"]
+description = "Generate and run migrations (production)"
+run = "pnpm db:migrate"
+
+[tasks."db:studio"]
+description = "Open Drizzle Studio GUI for database inspection"
+run = "pnpm db:studio"
+
+[tasks."db:seed"]
+description = "Seed database with sample data"
+run = "pnpm db:seed"
+
+# -----------------------------------------------------------------------------
+# Utility Tasks
+# -----------------------------------------------------------------------------
+
+[tasks.clean]
+description = "Clean all build artifacts and caches"
+run = "rm -rf .svelte-kit build dist node_modules/.vite && echo 'Cleaned build artifacts'"
+
+[tasks.setup]
+description = "Complete project setup (install + pre-commit)"
+depends = ["_install", "_precommit-install"]
+
+[tasks._install]
+description = "Install Node.js dependencies"
+run = "pnpm install"
+
+[tasks."_precommit-install"]
+description = "Install pre-commit hooks"
+run = "pre-commit install"
+depends = ["_install"]
+
+[tasks.update]
+description = "Update all dependencies"
+run = "pnpm update --latest && pre-commit autoupdate"
+
+[tasks.ci]
+description = "Run full CI pipeline locally"
+depends = ["lint", "check", "test:unit", "build"]
+
+[tasks.precommit]
+description = "Run pre-commit checks manually"
+run = "pre-commit run --all-files"
+
+[tasks.release]
+description = "Create a new release (runs semantic-release)"
+run = "pnpm semantic-release"
+
+# -----------------------------------------------------------------------------
+# Deployment Tasks
+# -----------------------------------------------------------------------------
+
+[tasks.deploy]
+description = "Deploy to Vercel production"
+run = "vercel --prod"
+
+[tasks."deploy:preview"]
+description = "Deploy preview to Vercel"
+run = "vercel"
+
+# -----------------------------------------------------------------------------
+# Information Tasks
+# -----------------------------------------------------------------------------
+
+[tasks.info]
+description = "Display project and environment information"
+run = """
+#!/usr/bin/env bash
+# Display project and environment information
+
+echo "=== Banned Books Jeopardy - Environment Info ==="
+echo "Node version: $(node --version)"
+echo "pnpm version: $(pnpm --version)"
+echo "Git branch: $(git rev-parse --abbrev-ref HEAD)"
+echo "Git SHA: $(git rev-parse --short HEAD)"
+echo "Database URL: ${DATABASE_URL:-Not set}"
+echo "Node environment: ${NODE_ENV:-development}"
+mise --version
+"""

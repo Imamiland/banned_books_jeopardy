@@ -4,7 +4,7 @@
     {
       "label": "Dev Server",
       "type": "shell",
-      "command": "pnpm dev",
+      "command": "mise run dev",
       "isBackground": true,
       "problemMatcher": {
         "owner": "vite",
@@ -34,7 +34,7 @@
     {
       "label": "Build",
       "type": "shell",
-      "command": "pnpm build",
+      "command": "mise run build",
       "problemMatcher": [
         "$tsc",
         "$eslint-stylish"
@@ -48,7 +48,7 @@
     {
       "label": "Preview",
       "type": "shell",
-      "command": "pnpm preview",
+      "command": "mise run preview",
       "isBackground": true,
       "problemMatcher": {
         "owner": "vite",
@@ -69,7 +69,7 @@
     {
       "label": "Type Check",
       "type": "shell",
-      "command": "pnpm check",
+      "command": "mise run check",
       "problemMatcher": [
         "$tsc"
       ],
@@ -82,7 +82,7 @@
     {
       "label": "Type Check (Watch)",
       "type": "shell",
-      "command": "pnpm check:watch",
+      "command": "mise run watch",
       "isBackground": true,
       "problemMatcher": {
         "owner": "typescript",
@@ -108,7 +108,7 @@
     {
       "label": "Format",
       "type": "shell",
-      "command": "pnpm format",
+      "command": "mise run format",
       "problemMatcher": [],
       "presentation": {
         "reveal": "silent",
@@ -118,7 +118,7 @@
     {
       "label": "Lint",
       "type": "shell",
-      "command": "pnpm lint",
+      "command": "mise run lint",
       "problemMatcher": [
         "$eslint-stylish"
       ],
@@ -131,7 +131,7 @@
     {
       "label": "Pre-commit (All Files)",
       "type": "shell",
-      "command": "pre-commit run --all-files",
+      "command": "mise run precommit",
       "problemMatcher": [],
       "group": "test",
       "presentation": {
@@ -143,7 +143,7 @@
     {
       "label": "Unit Tests",
       "type": "shell",
-      "command": "pnpm test:unit",
+      "command": "mise run test:unit",
       "problemMatcher": [],
       "group": "test",
       "presentation": {
@@ -154,7 +154,7 @@
     {
       "label": "Unit Tests (Watch)",
       "type": "shell",
-      "command": "pnpm test:unit -- --watch",
+      "command": "mise run test:unit:watch",
       "isBackground": true,
       "problemMatcher": {
         "owner": "vitest",
@@ -175,7 +175,7 @@
     {
       "label": "E2E Tests",
       "type": "shell",
-      "command": "pnpm test:e2e",
+      "command": "mise run test:e2e",
       "problemMatcher": [],
       "group": "test",
       "presentation": {
@@ -186,7 +186,7 @@
     {
       "label": "E2E Tests (UI)",
       "type": "shell",
-      "command": "pnpm test:e2e -- --ui",
+      "command": "mise run test:e2e:ui",
       "isBackground": true,
       "problemMatcher": {
         "owner": "playwright",
@@ -207,7 +207,7 @@
     {
       "label": "E2E Tests (Debug)",
       "type": "shell",
-      "command": "pnpm test:e2e -- --debug",
+      "command": "mise run test:e2e:debug",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -218,7 +218,7 @@
     {
       "label": "All Tests",
       "type": "shell",
-      "command": "pnpm test",
+      "command": "mise run test",
       "problemMatcher": [],
       "group": {
         "kind": "test",
@@ -232,7 +232,7 @@
     {
       "label": "DB: Push Schema",
       "type": "shell",
-      "command": "pnpm db:push",
+      "command": "mise run db:push",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -242,7 +242,7 @@
     {
       "label": "DB: Generate Migration",
       "type": "shell",
-      "command": "pnpm db:migrate",
+      "command": "mise run db:migrate",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -252,7 +252,7 @@
     {
       "label": "DB: Studio",
       "type": "shell",
-      "command": "pnpm db:studio",
+      "command": "mise run db:studio",
       "isBackground": true,
       "problemMatcher": {
         "owner": "drizzle",
@@ -284,7 +284,7 @@
     {
       "label": "Clean",
       "type": "shell",
-      "command": "rm -rf .svelte-kit build dist node_modules/.vite",
+      "command": "mise run clean",
       "problemMatcher": [],
       "presentation": {
         "reveal": "silent",
@@ -294,7 +294,7 @@
     {
       "label": "Install Dependencies",
       "type": "shell",
-      "command": "pnpm install --frozen-lockfile",
+      "command": "mise run _install",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",
@@ -304,7 +304,7 @@
     {
       "label": "Setup Pre-commit Hooks",
       "type": "shell",
-      "command": "pre-commit install && pre-commit install --hook-type commit-msg",
+      "command": "mise run _precommit-install",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",

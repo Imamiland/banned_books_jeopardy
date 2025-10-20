@@ -5,6 +5,16 @@ default_stages:
 default_language_version:
     node: 22.20.0
 repos:
+    # Verify mise is installed and all tools are available
+    - repo: local
+      hooks:
+          - id: mise-install
+            name: Verify mise tools installed
+            entry: mise install
+            language: system
+            pass_filenames: false
+            stages: [pre-commit]
+            description: 'Ensure all mise-managed tools are installed and up-to-date'
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v6.0.0 # Use the ref you want to point at
       hooks:
