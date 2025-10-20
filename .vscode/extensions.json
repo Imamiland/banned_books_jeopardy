@@ -1,0 +1,59 @@
+{
+  "recommendations": [
+    // === Core SvelteKit Development ===
+    "svelte.svelte-vscode",
+    "bradlc.vscode-tailwindcss",
+
+    // === TypeScript & JavaScript ===
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+
+    // === Database & ORM ===
+    "drizzle-team.drizzle-vscode",
+
+    // === Testing ===
+    "ms-playwright.playwright",
+    "vitest.explorer",
+
+    // === Git & Version Control ===
+    "github.vscode-pull-request-github",
+    "eamodio.gitlens",
+
+    // === Code Quality & Linting ===
+    "streetsidesoftware.code-spell-checker",
+    "davidanson.vscode-markdownlint",
+    "redhat.vscode-yaml",
+
+    // === Productivity & Utilities ===
+    "usernamehw.errorlens",
+    "gruntfuggly.todo-tree",
+    "aaron-bond.better-comments",
+    "wayou.vscode-todo-highlight",
+
+    // === Environment & Tooling ===
+    "jdx.mise",
+
+    // === Documentation ===
+    "yzhang.markdown-all-in-one",
+    "bierner.markdown-mermaid",
+
+    // === Code Analysis (Optional) ===
+    "sonarsource.sonarlint-vscode",
+
+    // === Debug & DevTools (Optional) ===
+    "wallabyjs.console-ninja"
+  ],
+  "unwantedRecommendations": [
+    // Conflicting formatters
+    "esbenp.prettier-vscode-standard",
+    "rvest.vs-code-prettier-eslint",
+
+    // Redundant with ESLint
+    "ms-vscode.vscode-typescript-tslint-plugin",
+
+    // Not using these frameworks
+    "Vue.volar",
+    "astro-build.astro-vscode",
+    "angular.ng-template"
+  ]
+}
