@@ -134,10 +134,10 @@ Enhancement suggestions are tracked as [GitHub issues](/issues).
 Please ensure you have the following set up before contributing code:
 
 - **Pre-commit Hooks**: This project uses `pre-commit` to automate linting and formatting. Run `pre-commit install` after cloning the repository.
-- **Linting**: MegaLinter is configured to enforce style rules. Make sure your changes pass the configured linting rules by running:
+- **Linting**: All code must pass linting checks before committing. Pre-commit hooks will automatically run linters on changed files. To manually lint all files, run:
 
 ```bash
-pnpx mega-linter-runner
+pre-commit run --all-files
 ```
 
 - **Development Environment**: Ensure the site builds and previews correctly on your local setup before submitting changes:
@@ -189,7 +189,14 @@ For more details about the Angular commit message convention, see [Conventional 
 
 ### Code Formatting and Linting
 
-Code must adhere to the project's linting and formatting guidelines, enforced by pre-commit hooks and MegaLinter. Configurations for both are provided in the repository.
+Code must adhere to the project's linting and formatting guidelines, enforced by pre-commit hooks. All linter configurations are provided in the repository:
+
+- **Prettier** (`.prettierrc`) - Code formatting
+- **ESLint** (`eslint.config.js`) - JavaScript/TypeScript linting
+- **markdownlint** (`.markdownlint.json`) - Markdown linting
+- **yamllint** (`.yamllint.yaml`) - YAML linting
+
+Pre-commit hooks will automatically check and format your code before each commit.
 
 ## Development and Pull Requests
 
