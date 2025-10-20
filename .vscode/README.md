@@ -46,43 +46,57 @@ When you open this workspace, VS Code will prompt you to install recommended ext
 
 ## 🎯 Available Tasks
 
-Press `Cmd+Shift+P` (macOS) or `Ctrl+Shift+P` (Windows/Linux) and type "Tasks: Run Task" to see all available tasks:
+Press `Cmd+Shift+P` (macOS) or `Ctrl+Shift+P` (Windows/Linux) and type "Tasks: Run Task" to see all available tasks.
+
+**Note**: All tasks use `mise run` commands for consistency with CI/CD workflows. This ensures:
+
+- ✅ Same commands work in VS Code, terminal, and GitHub Actions
+- ✅ Correct tool versions from `.mise.toml` are used
+- ✅ Environment variables from `.env` are automatically loaded
 
 ### Development
 
-- **Dev Server** - Start development server (default build task)
-- **Build** - Build for production
-- **Preview** - Preview production build
-- **Type Check** - Run svelte-check once
-- **Type Check (Watch)** - Run svelte-check in watch mode
+- **Dev Server** - Start development server (`mise run dev`) - default build task
+- **Build** - Build for production (`mise run build`)
+- **Preview** - Preview production build (`mise run preview`)
+- **Type Check** - Run svelte-check once (`mise run check`)
+- **Type Check (Watch)** - Run svelte-check in watch mode (`mise run watch`)
 
 ### Code Quality
 
-- **Format** - Format all files with Prettier
-- **Lint** - Run ESLint + Prettier check
-- **Pre-commit (All Files)** - Run all pre-commit hooks
+- **Format** - Format all files with Prettier (`mise run format`)
+- **Lint** - Run ESLint + Prettier check (`mise run lint`)
+- **Pre-commit (All Files)** - Run all pre-commit hooks (`mise run precommit`)
 - **Browserslist: Lint** - Validate browserslist configuration
 
 ### Testing
 
-- **Unit Tests** - Run Vitest tests once
-- **Unit Tests (Watch)** - Run Vitest in watch mode
-- **E2E Tests** - Run Playwright tests
-- **E2E Tests (UI)** - Run Playwright with UI
-- **E2E Tests (Debug)** - Run Playwright in debug mode
-- **All Tests** - Run unit + E2E tests (default test task)
+- **Unit Tests** - Run Vitest tests once (`mise run test:unit`)
+- **Unit Tests (Watch)** - Run Vitest in watch mode (`mise run test:unit:watch`)
+- **E2E Tests** - Run Playwright tests (`mise run test:e2e`)
+- **E2E Tests (UI)** - Run Playwright with UI (`mise run test:e2e:ui`)
+- **E2E Tests (Debug)** - Run Playwright in debug mode (`mise run test:e2e:debug`)
+- **All Tests** - Run unit + E2E tests (`mise run test`) - default test task
 
 ### Database
 
-- **DB: Push Schema** - Push schema changes to database
-- **DB: Generate Migration** - Generate migration files
-- **DB: Studio** - Open Drizzle Studio GUI
+- **DB: Push Schema** - Push schema changes to database (`mise run db:push`)
+- **DB: Generate Migration** - Generate migration files (`mise run db:migrate`)
+- **DB: Studio** - Open Drizzle Studio GUI (`mise run db:studio`)
 
 ### Utilities
 
-- **Clean** - Remove build artifacts
-- **Install Dependencies** - Run pnpm install
-- **Setup Pre-commit Hooks** - Install pre-commit hooks
+- **Clean** - Remove build artifacts (`mise run clean`)
+- **Install Dependencies** - Install npm packages (`mise run _install`)
+- **Setup Pre-commit Hooks** - Install pre-commit hooks (`mise run _precommit-install`)
+
+**Alternative**: You can also run these commands directly in the terminal:
+
+```bash
+mise run dev              # Start dev server
+mise run test             # Run all tests
+mise tasks                # List all available mise tasks
+```
 
 ## 🐛 Debug Configurations
 
