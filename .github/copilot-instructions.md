@@ -196,7 +196,7 @@ The repository uses GitHub Projects (v2) for issue tracking with custom fields:
 9. Size Estimate View
 10. All Issues Table
 
-**Automation** (`.github/workflows/project-automation.yml`):
+**Automation** (`.github/workflows/project-automation.yaml`):
 
 - Auto-labeling based on issue type
 - Priority triage (P0 issues trigger alerts)
@@ -204,7 +204,7 @@ The repository uses GitHub Projects (v2) for issue tracking with custom fields:
 - Welcome messages for first-time contributors
 - Auto-assignment based on feature area
 
-**Label System** (`.github/LABELS.md`):
+**Label System**:
 
 - Type labels: bug, enhancement, documentation, chore, etc.
 - Priority labels: P0, P1, P2, P3, P4
@@ -223,7 +223,7 @@ The repository uses GitHub Projects (v2) for issue tracking with custom fields:
 
 ### Project Automation Workflow
 
-The `project-automation.yml` workflow provides 5 automation jobs:
+The `project-automation.yaml` workflow provides 5 automation jobs:
 
 1. **Auto-Label**: Applies type labels (bug, enhancement, docs) based on template selection
 2. **Triage Priority**: Alerts on P0 (Critical) issues, auto-assigns based on feature area
@@ -235,7 +235,6 @@ The `project-automation.yml` workflow provides 5 automation jobs:
 
 - `GITHUB_TOKEN`: Automatically provided by GitHub Actions
 - Project board must be created manually via GitHub web UI (cannot be automated via API)
-- Labels created via GitHub CLI script in `.github/LABELS.md`
 
 ## Project-Specific Patterns
 
@@ -1037,3 +1036,4 @@ pnpm test:e2e --project=chromium  # Specific browser
 - **package.json scripts**: All available commands
 
 When in doubt, reference `AI_ONBOARDING.md` first - it contains detailed implementation patterns and examples.
+Do not create a summary document every time asked to do something. Only create summary documents when specifically requested.
