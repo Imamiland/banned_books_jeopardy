@@ -24,7 +24,7 @@ pre-commit = "4.3.0"
 # "npm:prettier" = "latest"         # Code formatting
 # "npm:eslint" = "latest"           # Linting
 # "npm:typescript" = "latest"       # Type checking
-# "npm:vercel" = "latest"           # Deployment CLI
+"npm:vercel" = "latest"                                                # Deployment CLI
 "npm:corepack" = "latest"
 "ubi:tursodatabase/turso-cli" = { version = "v1.0.15", exe = "turso" }
 "ubi:cocogitto/cocogitto" = { version = "v6.4.0", exe = "cog" }
