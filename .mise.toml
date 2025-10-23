@@ -101,7 +101,7 @@ run = "pnpm check --watch"
 
 [tasks.test]
 description = "Run all tests (unit + E2E)"
-depends = ["test:unit", "test:e2e", "_install"]
+depends = ["test:unit", "test:e2e"]
 
 [tasks."test:unit"]
 description = "Run Vitest unit tests"
@@ -187,7 +187,7 @@ run = "rm -rf .svelte-kit build dist node_modules/.vite && echo 'Cleaned build a
 
 [tasks.setup]
 description = "Complete project setup (install + pre-commit)"
-depends = ["_install", "_precommit-install"]
+depends = ["_precommit-install"]
 
 [tasks._install]
 description = "Install Node.js dependencies"
