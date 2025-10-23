@@ -19,12 +19,12 @@ python = "3.12"
 pre-commit = "4.3.0"
 
 # Development tools (installed via npm/pnpm)
-"npm:@playwright/test" = "latest" # E2E testing
-"npm:drizzle-kit" = "latest"      # Database migrations
-"npm:prettier" = "latest"         # Code formatting
-"npm:eslint" = "latest"           # Linting
-"npm:typescript" = "latest"       # Type checking
-"npm:vercel" = "latest"           # Deployment CLI
+# "npm:@playwright/test" = "latest" # E2E testing
+# "npm:drizzle-kit" = "latest"      # Database migrations
+# "npm:prettier" = "latest"         # Code formatting
+# "npm:eslint" = "latest"           # Linting
+# "npm:typescript" = "latest"       # Type checking
+# "npm:vercel" = "latest"           # Deployment CLI
 "npm:corepack" = "latest"
 "ubi:tursodatabase/turso-cli" = { version = "v1.0.15", exe = "turso" }
 # =============================================================================
@@ -131,18 +131,22 @@ run = "pnpm test:e2e -- --debug"
 [tasks.lint]
 description = "Run ESLint and Prettier checks"
 run = "pnpm lint"
+depends = ["_install"]
 
 [tasks."lint:fix"]
 description = "Auto-fix ESLint and Prettier issues"
 run = "pnpm lint -- --fix && pnpm format"
+depends = ["_install"]
 
 [tasks.format]
 description = "Format code with Prettier"
 run = "pnpm format"
+depends = ["_install"]
 
 [tasks."format:check"]
 description = "Check code formatting without modifying files"
 run = "pnpm format -- --check"
+depends = ["_install"]
 
 # -----------------------------------------------------------------------------
 # Database Tasks
