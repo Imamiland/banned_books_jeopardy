@@ -25,7 +25,7 @@ pre-commit = "4.3.0"
 "npm:eslint" = "latest"           # Linting
 "npm:typescript" = "latest"       # Type checking
 "npm:vercel" = "latest"           # Deployment CLI
-
+"ubi:tursodatabase/turso-cli" = { version = "v1.0.15", exe = "turso" }
 # =============================================================================
 # Environment Variables
 # =============================================================================
@@ -45,6 +45,20 @@ NODE_OPTIONS = "--max-old-space-size=4096"
 VITE_DEV_SERVER_URL = "http://localhost:5173"
 PREVIEW_SERVER_URL = "http://localhost:4173"
 
+# Vercel deployment settings
+VERCEL_ORG_ID = "team_P5qj2s3eUcE8kFUBY01Wiiuh"
+VERCEL_PROJECT_ID = "prj_nPmH1yHB7kyn5X2TmYzyjm5k8Ytl"
+
+# Turso DB related variables
+TURSO_DB_URL = "libsql://dev-alisajid.aws-us-east-1.turso.io"
+
+# Auth0 settings for local development
+AUTH0_DOMAIN = ""
+AUTH0_CLIENT_ID = ""
+AUTH0_API_AUDIENCE = ""
+
+AUTH0_CALLBACK_URL = "http://localhost:5173/authh/callback"
+AUTH0_LOGOUT_URL = "http://localhost:5173"
 # =============================================================================
 # Task Definitions
 # =============================================================================
