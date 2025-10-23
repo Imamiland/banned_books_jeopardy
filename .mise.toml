@@ -11,17 +11,21 @@
 # Runtime
 node = "22.20.0"
 
+# Package manager (locked version for consistency)
+pnpm = "10.14.0"
+
 # Python tools
 python = "3.12"
 pre-commit = "4.3.0"
 
 # Development tools (installed via npm/pnpm)
-"npm:@playwright/test" = "latest"                                      # E2E testing
-"npm:drizzle-kit" = "latest"                                           # Database migrations
-"npm:prettier" = "latest"                                              # Code formatting
-"npm:eslint" = "latest"                                                # Linting
-"npm:typescript" = "latest"                                            # Type checking
-"npm:vercel" = "latest"                                                # Deployment CLI
+"npm:@playwright/test" = "latest" # E2E testing
+"npm:drizzle-kit" = "latest"      # Database migrations
+"npm:prettier" = "latest"         # Code formatting
+"npm:eslint" = "latest"           # Linting
+"npm:typescript" = "latest"       # Type checking
+"npm:vercel" = "latest"           # Deployment CLI
+"npm:corepack" = "latest"
 "ubi:tursodatabase/turso-cli" = { version = "v1.0.15", exe = "turso" }
 # =============================================================================
 # Environment Variables
@@ -35,8 +39,8 @@ pre-commit = "4.3.0"
 # Static environment variables
 NODE_ENV = "development"
 
-# Node.js memory and debugging options
-NODE_OPTIONS = "--max-old-space-size=4096"
+# Note: NODE_OPTIONS removed from mise.toml due to GitHub Actions compatibility
+# Set NODE_OPTIONS="--max-old-space-size=4096" in your shell profile or CI env vars
 
 # Development URLs (override with .env if needed)
 VITE_DEV_SERVER_URL = "http://localhost:5173"
@@ -50,20 +54,12 @@ VERCEL_PROJECT_ID = "prj_nPmH1yHB7kyn5X2TmYzyjm5k8Ytl"
 TURSO_DB_URL = "libsql://dev-alisajid.aws-us-east-1.turso.io"
 
 # Auth0 settings for local development
-AUTH0_DOMAIN = ""
-AUTH0_CLIENT_ID = ""
-AUTH0_API_AUDIENCE = ""
+AUTH0_DOMAIN = "banned-books-jeopardy.us.auth0.com"
+AUTH0_CLIENT_ID = "Q5qrfEY55S1ABkZzn00hch5XWHNkVRr5"
+AUTH0_API_AUDIENCE = "https://banned-books-jeopardy.us.auth0.com/api/v2/"
 
 AUTH0_CALLBACK_URL = "http://localhost:5173/authh/callback"
 AUTH0_LOGOUT_URL = "http://localhost:5173"
-
-# =============================================================================
-# Environment hooks
-# =============================================================================
-[hooks]
-postinstall = "npm corepack enable"
-
-
 # =============================================================================
 # Task Definitions
 # =============================================================================
