@@ -51,7 +51,7 @@
     "@types/eslint": "9.6.1",
     "browserslist-lint": "0.3.3",
     "drizzle-kit": "0.31.5",
-    "eslint": "9.37.0",
+    "eslint": "9.38.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-svelte": "3.12.5",
     "globals": "16.4.0",
