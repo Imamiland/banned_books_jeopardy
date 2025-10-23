@@ -38,7 +38,7 @@ jobs:
                   install: true
                   cache: true
             - name: Ensure playwright has the latest browser binaries
-              run: mise exec -- pnpx playwright install --with-deps
+              run: playwright install --with-deps
             - name: Ensure project is formatted and linted
               run: mise run lint
             - name: Ensure project syncs the configs
