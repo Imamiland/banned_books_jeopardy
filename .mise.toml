@@ -74,6 +74,7 @@ AUTH0_LOGOUT_URL = "http://localhost:5173"
 [tasks.dev]
 description = "Start development server with hot reload"
 run = "pnpm dev"
+depends = ["_install"]
 
 [tasks.build]
 description = "Build production bundle"
@@ -88,6 +89,7 @@ depends = ["build"]
 [tasks.check]
 description = "Type-check entire codebase with svelte-check"
 run = "pnpm check"
+depends = ["_install"]
 
 [tasks.watch]
 description = "Type-check in watch mode"
