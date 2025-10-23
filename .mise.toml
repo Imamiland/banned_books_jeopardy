@@ -11,20 +11,17 @@
 # Runtime
 node = "22.20.0"
 
-# Package manager (locked version for consistency)
-pnpm = "10.14.0"
-
 # Python tools
 python = "3.12"
 pre-commit = "4.3.0"
 
 # Development tools (installed via npm/pnpm)
-"npm:@playwright/test" = "latest" # E2E testing
-"npm:drizzle-kit" = "latest"      # Database migrations
-"npm:prettier" = "latest"         # Code formatting
-"npm:eslint" = "latest"           # Linting
-"npm:typescript" = "latest"       # Type checking
-"npm:vercel" = "latest"           # Deployment CLI
+"npm:@playwright/test" = "latest"                                      # E2E testing
+"npm:drizzle-kit" = "latest"                                           # Database migrations
+"npm:prettier" = "latest"                                              # Code formatting
+"npm:eslint" = "latest"                                                # Linting
+"npm:typescript" = "latest"                                            # Type checking
+"npm:vercel" = "latest"                                                # Deployment CLI
 "ubi:tursodatabase/turso-cli" = { version = "v1.0.15", exe = "turso" }
 # =============================================================================
 # Environment Variables
@@ -59,6 +56,14 @@ AUTH0_API_AUDIENCE = ""
 
 AUTH0_CALLBACK_URL = "http://localhost:5173/authh/callback"
 AUTH0_LOGOUT_URL = "http://localhost:5173"
+
+# =============================================================================
+# Environment hooks
+# =============================================================================
+[hooks]
+postinstall = "npm corepack enable"
+
+
 # =============================================================================
 # Task Definitions
 # =============================================================================
