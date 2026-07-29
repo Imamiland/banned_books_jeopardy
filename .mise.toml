@@ -9,7 +9,7 @@
 
 [tools]
 # Runtime
-node = "22.20.0"
+node = "22.23.2"
 
 # Package manager (locked version for consistency)
 pnpm = "10.14.0"
