@@ -8,8 +8,10 @@
   } from '$lib/stores/gameStore';
   import type { Board, GameState, Question, TileState } from '$lib/types/game';
   import { onMount } from 'svelte';
+  import { playSound } from '$lib/utils/sounds';
   import CategoryHeader from './CategoryHeader.svelte';
   import QuestionTile from './QuestionTile.svelte';
+  import Timer from '../Timer.svelte';
 
   interface Props {
     board: Board;
@@ -24,6 +26,10 @@
     currentQuestion: null,
     startedAt: null
   });
+
+  // Modal state: the question currently open and whether its answer is shown
+  let activeQuestion = $state<Question | null>(null);
+  let answerRevealed = $state(false);
 
   // Initialize game state from localStorage on mount
   onMount(() => {
@@ -41,28 +47,44 @@
     return 'unplayed';
   }
 
-  // Handle tile click
+  // Open the question modal for a tile
   function handleTileClick(question: Question) {
     // Don't allow clicking already answered tiles
     if (gameState.revealedTiles.has(question.id)) {
       return;
     }
 
-    // Set as current question (will trigger "playing" state)
     gameState = setCurrentQuestion(gameState, question);
+    activeQuestion = question;
+    answerRevealed = false;
+    playSound('tile-flip');
+  }
 
-    // TODO: Start timer, play sounds, show question modal
-    // For now, we'll just reveal after a delay to simulate gameplay
-    setTimeout(() => {
-      gameState = revealTile(gameState, question.id);
-      gameState = setCurrentQuestion(gameState, null);
+  // Reveal the answer (triggered by timer expiry or the reveal button)
+  function revealAnswer() {
+    if (!activeQuestion || answerRevealed) {
+      return;
+    }
+    answerRevealed = true;
+    playSound('answer-reveal');
+  }
 
-      // Check if game is complete
-      if (isGameComplete(gameState, board.categories.length * 5)) {
-        // TODO: Play completion sound, show celebration
-        console.log('Game complete!');
-      }
-    }, 3000); // 3 second delay to simulate question display
+  // Close the modal, mark the tile answered, and check for completion
+  function closeModal() {
+    if (!activeQuestion) {
+      return;
+    }
+
+    const question = activeQuestion;
+    activeQuestion = null;
+    answerRevealed = false;
+
+    gameState = revealTile(gameState, question.id);
+    gameState = setCurrentQuestion(gameState, null);
+
+    if (isGameComplete(gameState, board.categories.length * 5)) {
+      playSound('board-complete');
+    }
   }
 
   // Handle reset button
@@ -70,6 +92,8 @@
     if (confirm('Are you sure you want to reset the game? All progress will be lost.')) {
       resetGameState(board.id);
       gameState = initGameState(board.id);
+      activeQuestion = null;
+      answerRevealed = false;
     }
   }
 
@@ -81,6 +105,13 @@
         ...cat,
         questions: [...cat.questions].sort((a, b) => a.order - b.order)
       }))
+  );
+
+  // Map question categoryId to its category name for the modal header
+  let categoryNameById = $derived(new Map(board.categories.map((cat) => [cat.id, cat.name])));
+
+  let activeCategoryName = $derived(
+    activeQuestion ? (categoryNameById.get(activeQuestion.categoryId) ?? '') : ''
   );
 </script>
 
@@ -131,4 +162,53 @@
       </div>
     </div>
   </div>
+
+  <!-- Question / Answer Modal -->
+  {#if activeQuestion}
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        class="w-full max-w-3xl rounded-2xl bg-blue-900 p-8 text-center shadow-2xl ring-4 ring-yellow-400"
+      >
+        <p class="mb-2 text-sm font-semibold tracking-widest text-yellow-400 uppercase">
+          {activeCategoryName} · ${activeQuestion.value}
+        </p>
+
+        {#if !answerRevealed}
+          <p class="mb-6 text-3xl leading-snug font-bold text-white">
+            {activeQuestion.question}
+          </p>
+
+          <Timer
+            timeLimit={activeQuestion.timeLimit}
+            onExpire={revealAnswer}
+            autoStart
+          />
+
+          <button
+            type="button"
+            onclick={revealAnswer}
+            class="mt-6 rounded-lg bg-yellow-400 px-6 py-3 font-semibold text-blue-950 shadow-lg transition-colors hover:bg-yellow-300"
+          >
+            Reveal Answer
+          </button>
+        {:else}
+          <p class="mb-6 text-3xl leading-snug font-bold text-yellow-300">
+            {activeQuestion.answer}
+          </p>
+
+          <button
+            type="button"
+            onclick={closeModal}
+            class="rounded-lg bg-green-500 px-6 py-3 font-semibold text-white shadow-lg transition-colors hover:bg-green-600"
+          >
+            Continue
+          </button>
+        {/if}
+      </div>
+    </div>
+  {/if}
 </div>
