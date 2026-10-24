@@ -2,7 +2,13 @@ import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
 import { createClient } from '@libsql/client';
 import { drizzle } from 'drizzle-orm/libsql';
-if (!env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
-if (!dev && !env.DATABASE_AUTH_TOKEN) throw new Error('DATABASE_AUTH_TOKEN is not set');
-const client = createClient({ url: env.DATABASE_URL, authToken: env.DATABASE_AUTH_TOKEN });
+
+const url = env.DATABASE_URL ?? 'file:local.db';
+const authToken = env.DATABASE_AUTH_TOKEN;
+
+if (!dev && !authToken && !url.startsWith('file:')) {
+  throw new Error('DATABASE_AUTH_TOKEN is required for remote databases');
+}
+
+const client = createClient({ url, authToken });
 export const db = drizzle(client);
