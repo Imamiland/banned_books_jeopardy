@@ -33,6 +33,20 @@ export default ts.config(
     }
   },
   {
+    // svelte/no-navigation-without-resolve only applies to server-side navigation,
+    // where goto() must be paired with resolve(). Disable it for client-side code.
+    files: ['**/*.ts', '**/*.svelte'],
+    rules: {
+      'svelte/no-navigation-without-resolve': 'off'
+    }
+  },
+  {
+    files: ['**/+page.server.ts', '**/+server.ts', '**/hooks.server.ts'],
+    rules: {
+      'svelte/no-navigation-without-resolve': 'error'
+    }
+  },
+  {
     ignores: ['build/', '.svelte-kit/', 'dist/', '.vercel/']
   }
 );
