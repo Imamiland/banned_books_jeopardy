@@ -1,5 +1,6 @@
 import type { AuthUser } from '$lib/types/auth';
 import type { Role } from '$lib/utils/permissions';
+import type { Cookies } from '@sveltejs/kit';
 
 const SESSION_COOKIE = 'session';
 const MAX_AGE = 60 * 60 * 24 * 7;
@@ -33,6 +34,19 @@ export function createSessionCookie(user: AuthUser): string {
 
 export function clearSessionCookie(): string {
   return `${SESSION_COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`;
+}
+
+export function setSession(cookies: Cookies, user: AuthUser): void {
+  cookies.set(SESSION_COOKIE, encodeURIComponent(encodeSession(user)), {
+    path: '/',
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: MAX_AGE
+  });
+}
+
+export function clearSession(cookies: Cookies): void {
+  cookies.delete(SESSION_COOKIE, { path: '/' });
 }
 
 export function mockUser(role: Role = 'player'): AuthUser {
