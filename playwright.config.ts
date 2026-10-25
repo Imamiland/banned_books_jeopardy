@@ -2,7 +2,7 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   webServer: {
-    command: 'npm run build && npm run preview',
+    command: 'npx drizzle-kit push --force && npm run build && npm run preview',
     port: 4173
   },
 
