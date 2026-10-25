@@ -2,6 +2,7 @@ import { CATEGORY_COUNT, QUESTION_COUNT, VALUES } from '$lib/constants';
 import { db } from '$lib/server/db/index';
 import { boards, categories, questions, users } from '$lib/server/db/schema';
 import type { AuthUser } from '$lib/types/auth';
+import type { Board } from '$lib/types/game';
 import { eq } from 'drizzle-orm';
 
 export interface BoardFormData {
@@ -171,6 +172,58 @@ export async function updateBoardFromForm(
       });
     }
   }
+}
+
+export async function getBoardForGame(boardId: number): Promise<Board | null> {
+  const [board] = await db.select().from(boards).where(eq(boards.id, boardId));
+  if (!board) return null;
+
+  const cats = await db
+    .select()
+    .from(categories)
+    .where(eq(categories.boardId, boardId))
+    .orderBy(categories.order);
+
+  const result: Board = {
+    id: board.id,
+    title: board.title,
+    description: board.description,
+    createdBy: board.createdBy,
+    published: board.published,
+    createdAt: board.createdAt,
+    updatedAt: board.updatedAt,
+    categories: []
+  };
+
+  for (const cat of cats) {
+    const qs = await db
+      .select()
+      .from(questions)
+      .where(eq(questions.categoryId, cat.id))
+      .orderBy(questions.order);
+
+    result.categories.push({
+      id: cat.id,
+      boardId: cat.boardId,
+      name: cat.name,
+      order: cat.order,
+      createdAt: cat.createdAt,
+      updatedAt: cat.updatedAt,
+      questions: qs.map((q) => ({
+        id: q.id,
+        categoryId: q.categoryId,
+        value: q.value,
+        question: q.question,
+        answer: q.answer,
+        timeLimit: q.timeLimit,
+        order: q.order,
+        createdAt: q.createdAt,
+        updatedAt: q.updatedAt
+      }))
+    });
+  }
+
+  return result;
 }
 
 export async function getBoardWithContent(boardId: number): Promise<BoardWithContent | null> {
