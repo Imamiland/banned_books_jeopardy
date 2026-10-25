@@ -30,3 +30,6 @@ vite.config.ts.timestamp-*
 mega-linter-reports/
 
 issue-creator
+
+# Unignore the scripts directory (global gitignore ignores [Ss]cripts)
+!scripts/
