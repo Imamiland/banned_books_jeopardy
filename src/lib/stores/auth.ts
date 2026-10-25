@@ -1,7 +1,7 @@
 import { goto } from '$app/navigation';
 import type { AuthUser } from '$lib/types/auth';
 
-let user = $state<AuthUser | null>(null);
+let user: AuthUser | null = null;
 
 export function setUser(next: AuthUser | null): void {
   user = next;
