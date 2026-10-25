@@ -37,7 +37,7 @@ export function clearSessionCookie(): string {
 }
 
 export function setSession(cookies: Cookies, user: AuthUser): void {
-  cookies.set(SESSION_COOKIE, encodeURIComponent(encodeSession(user)), {
+  cookies.set(SESSION_COOKIE, encodeSession(user), {
     path: '/',
     httpOnly: true,
     sameSite: 'lax',
