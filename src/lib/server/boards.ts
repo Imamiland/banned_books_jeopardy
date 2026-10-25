@@ -65,7 +65,8 @@ export function parseBoardForm(formData: FormData): BoardFormData {
         (formData.get(`question-${i}-${j}-question`) as string | null) ?? '';
       data.categories[i].questions[j].answer =
         (formData.get(`question-${i}-${j}-answer`) as string | null) ?? '';
-      const timeLimit = Number(formData.get(`question-${i}-${j}-timeLimit`));
+      const rawTimeLimit = formData.get(`question-${i}-${j}-timeLimit`);
+      const timeLimit = rawTimeLimit === null || rawTimeLimit === '' ? NaN : Number(rawTimeLimit);
       data.categories[i].questions[j].timeLimit = Number.isFinite(timeLimit) ? timeLimit : 30;
     }
   }
