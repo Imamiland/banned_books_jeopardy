@@ -146,11 +146,10 @@ repos:
             types: [file]
             files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
             description: "Run ESLint using the project's installed version"
-          - id: changelog
-            name: generate changelog
-            entry: cog verify && cog check
+          - id: cog-verify
+            name: cog verify commit message
+            entry: cog verify --file
             language: system
-            types: [file]
-            stages: [pre-commit, pre-push]
-            files: \.md$
-            description: 'Generate changelog using cog'
+            stages: [commit-msg]
+            pass_filenames: true
+            description: 'Verify the commit message against cog conventional commit spec'
