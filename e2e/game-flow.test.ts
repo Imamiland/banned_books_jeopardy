@@ -34,6 +34,8 @@ test('continuing after reveal marks the tile answered', async ({ page }) => {
   const firstTile = page.getByRole('button', { name: '100 point question' }).first();
   await firstTile.click();
   await page.getByRole('button', { name: 'Reveal Answer' }).click();
+
+  await expect(page.getByRole('dialog')).toContainText('What is To Kill a Mockingbird?');
   await page.getByRole('button', { name: 'Continue' }).click();
 
   await expect(page.getByRole('dialog')).toBeHidden();
