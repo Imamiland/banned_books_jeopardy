@@ -38,6 +38,54 @@ Banned Books Jeopardy is a web application designed for live events where a Jeop
 
 ---
 
+## Implementation Status
+
+This section documents the **current state of the codebase** as of the last review, with concrete counts and a file inventory. It complements the aspirational sections above (which describe the target architecture) by clarifying what is implemented today and what a user must configure to make the application deployment-ready.
+
+### Component & File Inventory (as implemented)
+
+| Area               | Count | Files                                                                                                                                                                                                                                                                                                                                                                                    |
+| ------------------ | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Svelte components  | 6     | `Timer.svelte`, `GameBoard.svelte`, `QuestionTile.svelte`, `CategoryHeader.svelte`, `BoardEditor.svelte`, `AdminNav.svelte`                                                                                                                                                                                                                                                              |
+| Route files        | 13    | `+page.svelte`, `+page.server.ts`, `+layout.svelte`, `game/[boardId]/+page.svelte`, `game/[boardId]/+page.server.ts`, `admin/boards/new/+page.svelte`, `admin/boards/new/+page.server.ts`, `admin/boards/[id]/edit/+page.svelte`, `admin/boards/[id]/edit/+page.server.ts`, `auth/callback/+page.server.ts`, `auth/logout/+page.server.ts`, `api/boards/+server.ts`, `demo/+page.svelte` |
+| Database tables    | 5     | `users`, `boards`, `categories`, `questions`, `gameSessions` (note: `gameSessions` is defined in the schema but is **not yet referenced** by application code)                                                                                                                                                                                                                           |
+| Permission helpers | 5     | `canViewBoard`, `canEditBoard`, `canDeleteBoard`, `canManageUsers`, `canPublishBoard` (in `src/lib/utils/permissions.ts`)                                                                                                                                                                                                                                                                |
+| Sound effects      | 6     | `tile-click.mp3`, `tile-flip.mp3`, `timer-tick.mp3`, `timer-expire.mp3`, `answer-reveal.mp3`, `board-complete.mp3` (in `static/sounds/`)                                                                                                                                                                                                                                                 |
+| Test files         | 9     | 3 E2E (`e2e/game-flow.test.ts`, `e2e/admin-crud.test.ts`, `e2e/demo.test.ts`) + 6 unit (`src/lib/server/auth/auth0.test.ts`, `src/lib/stores/gameStore.test.ts`, `src/lib/server/boards.test.ts`, `src/lib/utils/permissions.test.ts`, `src/lib/types/game.test.ts`, `src/demo.spec.ts`)                                                                                                 |
+| CI workflows       | 7     | `scorecard`, `deploy-vercel`, `project-automation`, `sonarcloud`, `dependency-review`, `codeql`, plus a `.gitkeep` placeholder                                                                                                                                                                                                                                                           |
+| Server helpers     | 5     | `parseBoardForm`, `createBoardFromForm`, `updateBoardFromForm`, `getBoardForGame`, `getBoardWithContent` (in `src/lib/server/boards.ts`)                                                                                                                                                                                                                                                 |
+| Sound utilities    | 4     | `playSound`, `stopSound`, `preloadAllSounds`, `clearSoundCache` (in `src/lib/utils/sounds.ts`)                                                                                                                                                                                                                                                                                           |
+
+### Current Authentication State (IMPORTANT)
+
+> **The application currently ships with a _mock_ authentication implementation, not a live Auth0 integration.** This is the single most important fact for anyone preparing a deployment.
+
+- `src/routes/auth/callback/+page.server.ts` constructs a user via `mockUser(role)`, where `role` is read from the query string (`url.searchParams.get('role')`).
+- `src/lib/server/auth/auth0.ts` serializes the user into a session cookie using `btoa(JSON.stringify(user))` — **base64 encoding, not a signed token**.
+- `@auth0/auth0-spa-js` is **not** present in `package.json` dependencies.
+- `SECRET_SESSION_KEY` is declared in `.env.example` but is **not referenced** by any code path.
+- No CSRF protection is present on form actions or POST endpoints.
+
+**Consequence:** As-is, the application is suitable for local development and demos only. It must **not** be deployed to a public URL without completing the [Deployment Readiness Checklist](#deployment-readiness-checklist-auth0--user-actions-required) below.
+
+### What Is Implemented vs. Target
+
+| Capability                          | Status                                                                              |
+| ----------------------------------- | ----------------------------------------------------------------------------------- |
+| 5×5 game board with 25 tiles        | ✅ Implemented (`GameBoard.svelte`, `QuestionTile.svelte`, `CategoryHeader.svelte`) |
+| Countdown timer with tick sound     | ✅ Implemented (`Timer.svelte`, `sounds.ts`)                                        |
+| localStorage game-state persistence | ✅ Implemented (`gameStore.ts`)                                                     |
+| Board CRUD via admin UI             | ✅ Implemented (`BoardEditor.svelte`, `boards.ts`, admin routes)                    |
+| RBAC permission helpers             | ✅ Implemented (`permissions.ts`, 5 functions)                                      |
+| Turso/libSQL + Drizzle schema       | ✅ Implemented (`db/index.ts`, `db/schema.ts`, 5 tables)                            |
+| Live Auth0 JWT authentication       | ⚠️ **Mock only** — see checklist below                                              |
+| Signed session cookies              | ⚠️ **Not implemented** — base64 only                                                |
+| CSRF protection                     | ⚠️ **Not implemented**                                                              |
+| `+layout.server.ts` auth guard      | ⚠️ **Not present**                                                                  |
+| `gameSessions` analytics            | ⚠️ Schema defined, not wired into app code                                          |
+
+---
+
 ## Tech Stack
 
 ### Frontend
@@ -300,6 +348,97 @@ Implement RBAC in:
 - Server-side load functions (`+page.server.ts`)
 - API routes (`src/routes/api/+server.ts`)
 - Client-side UI (show/hide admin buttons)
+
+---
+
+## Deployment Readiness Checklist (Auth0 & User Actions Required)
+
+> The application currently runs on a **mock** auth implementation. The steps below are the **user-side actions** required to make the application deployment-ready. They are ordered so that each step can be verified before the next.
+
+### 1. Create the Auth0 Tenant & Application
+
+1. Sign in to the [Auth0 Dashboard](https://manage.auth0.com/).
+2. **Applications → Applications → Create Application**.
+   - **Name**: `banned-books-jeopardy`
+   - **Type**: **Regular Web Application**
+3. Under **Settings**, record:
+   - **Domain** → `AUTH0_DOMAIN` (e.g. `your-tenant.auth0.com`)
+   - **Client ID** → `AUTH0_CLIENT_ID`
+   - **Client Secret** → `AUTH0_CLIENT_SECRET`
+4. Under **Settings → Advanced → Grant Types**, ensure **Authorization Code** is enabled.
+5. Under **Settings → URLs**:
+   - **Allowed Callback URLs**:
+     - `http://localhost:5173/auth/callback`
+     - `https://your-domain.vercel.app/auth/callback`
+   - **Allowed Logout URLs**:
+     - `http://localhost:5173`
+     - `https://your-domain.vercel.app`
+
+### 2. Create Auth0 Roles
+
+In **User Management → Roles**, create three roles:
+
+| Role            | Purpose                                                    |
+| --------------- | ---------------------------------------------------------- |
+| `administrator` | Full access (create, edit any board, delete, manage users) |
+| `creator`       | Create new boards, edit own boards                         |
+| `player`        | View and play games only                                   |
+
+### 3. Assign Roles to Users
+
+1. **User Management → Users → (select a user) → Roles**.
+2. Assign one or more of the roles above to each user.
+3. Roles are stored in the user's **Roles** list and are exposed to the token via the Action in step 4.
+
+### 4. Inject Roles into the Token (Action or Rule)
+
+Roles must appear in the issued token so the app can read them. Use **one** of the following:
+
+**Option A — Auth0 Action (recommended):**
+
+1. **Actions → Create Action** → name it `inject-roles`.
+2. Paste the code from the [Add Roles to User Metadata](#add-roles-to-user-metadata) section above.
+3. **Actions → Triggers → Post Login** → add the `inject-roles` action.
+
+**Option B — Auth0 Rule:**
+
+1. **Actions → Rules → New Rule** → name it `inject-roles`.
+2. Paste the same code, adapting `event.authorization.roles` to the Rule API (`context.authz.roles`).
+3. Save and enable the rule.
+
+### 5. Replace the Mock Auth with the Real SDK
+
+The current code uses a mock. To go live:
+
+1. Install the SDK:
+
+   ```bash
+   pnpm add @auth0/auth0-spa-js
+   ```
+
+2. Replace the mock in `src/lib/server/auth/auth0.ts`:
+   - Replace `btoa(JSON.stringify(user))` with a **signed** session cookie (HMAC/JWT) using `SECRET_SESSION_KEY`.
+   - Replace `mockUser(role)` in `src/routes/auth/callback/+page.server.ts` with a real token exchange / verification.
+3. Add a `+layout.server.ts` auth guard that reads the session cookie and attaches the user to `locals`.
+4. Add CSRF protection to all form actions and POST endpoints.
+5. Wire `SECRET_SESSION_KEY` into the cookie signing (it is currently declared in `.env.example` but unused).
+
+### 6. Configure Environment Variables
+
+1. Copy `.env.example` to `.env` and fill in every value (see [Environment Variables](#environment-variables)).
+2. On Vercel: **Project Settings → Environment Variables** — add all variables, scoping each to Production / Preview / Development as needed.
+3. Redeploy after adding variables.
+
+### 7. Verify Before Going Public
+
+- [ ] `pnpm check` passes with 0 errors.
+- [ ] `pnpm test` passes (unit + E2E).
+- [ ] Login redirects to Auth0 and returns to `/auth/callback` with a valid token.
+- [ ] A `player` cannot reach `/admin/*`.
+- [ ] A `creator` can edit only their own boards.
+- [ ] A `administrator` can edit any board.
+- [ ] Session cookie is signed (not base64).
+- [ ] CSRF protection is active on all mutations.
 
 ---
 
