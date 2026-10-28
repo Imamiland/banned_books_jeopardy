@@ -20,11 +20,25 @@
   <div class="flex items-center gap-4">
     {#if user}
       <a
+        href="/admin/boards"
+        class="font-semibold text-white hover:text-yellow-400"
+      >
+        All Boards
+      </a>
+      <a
         href="/admin/boards/new"
         class="font-semibold text-white hover:text-yellow-400"
       >
         New Board
       </a>
+      {#if user.role === 'administrator'}
+        <a
+          href="/admin/users"
+          class="font-semibold text-white hover:text-yellow-400"
+        >
+          Users
+        </a>
+      {/if}
       <span class="text-sm text-white opacity-75">{user.name} ({user.role})</span>
       <button
         type="button"
