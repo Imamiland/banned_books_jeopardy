@@ -16,7 +16,7 @@ export function isAuthenticated(): boolean {
 }
 
 export function login(): void {
-  goto('/auth/callback');
+  goto('/auth/login');
 }
 
 export function logout(): void {

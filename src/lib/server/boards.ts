@@ -3,7 +3,7 @@ import { db } from '$lib/server/db/index';
 import { boards, categories, questions, users } from '$lib/server/db/schema';
 import type { AuthUser } from '$lib/types/auth';
 import type { Board } from '$lib/types/game';
-import { eq } from 'drizzle-orm';
+import { eq, inArray } from 'drizzle-orm';
 
 export interface BoardFormData {
   title: string;
@@ -264,4 +264,14 @@ export async function getBoardWithContent(boardId: number): Promise<BoardWithCon
   }
 
   return result;
+}
+
+export async function deleteBoard(boardId: number): Promise<void> {
+  const cats = await db.select().from(categories).where(eq(categories.boardId, boardId));
+  const catIds = cats.map((c) => c.id);
+  if (catIds.length) {
+    await db.delete(questions).where(inArray(questions.categoryId, catIds));
+  }
+  await db.delete(categories).where(eq(categories.boardId, boardId));
+  await db.delete(boards).where(eq(boards.id, boardId));
 }
